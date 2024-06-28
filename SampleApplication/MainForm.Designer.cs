@@ -32,6 +32,7 @@ namespace SampleApplication
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.kMenuStrip1 = new Kirilium.Controls.KMenuStrip();
             this.fileFToolStripMenuItem = new Kirilium.Controls.KToolStripMenuItem();
+            this.kToolStripMenuItem1 = new Kirilium.Controls.KToolStripMenuItem();
             this.kToolStrip1 = new Kirilium.Controls.KToolStrip();
             this.kToolStripButton1 = new Kirilium.Controls.KToolStripButton();
             this.kToolStripButton2 = new Kirilium.Controls.KToolStripButton();
@@ -69,9 +70,18 @@ namespace SampleApplication
             // 
             // fileFToolStripMenuItem
             // 
+            this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kToolStripMenuItem1});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(51, 18);
             this.fileFToolStripMenuItem.Text = "File(&F)";
+            // 
+            // kToolStripMenuItem1
+            // 
+            this.kToolStripMenuItem1.Name = "kToolStripMenuItem1";
+            this.kToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.kToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
+            this.kToolStripMenuItem1.Text = "Create New(&N)";
             // 
             // kToolStrip1
             // 
@@ -294,8 +304,8 @@ namespace SampleApplication
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.kTabControl1);
             this.Controls.Add(this.kCheckBox2);
@@ -352,5 +362,6 @@ namespace SampleApplication
         private Kirilium.Controls.KCheckBox kCheckBox1;
         private Kirilium.Controls.KCheckBox kCheckBox2;
         private Kirilium.Controls.KTabControl kTabControl1;
+        private Kirilium.Controls.KToolStripMenuItem kToolStripMenuItem1;
     }
 }

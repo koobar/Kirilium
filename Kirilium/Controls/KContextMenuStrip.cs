@@ -1,6 +1,7 @@
 ﻿using Kirilium.Controls.Elements;
 using Kirilium.Themes;
 using System.Windows.Forms;
+using static Kirilium.WinApi.Dwmapi;
 
 namespace Kirilium.Controls
 {
@@ -18,6 +19,12 @@ namespace Kirilium.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
+
+            if (OperatingSystem.IsWindows11())
+            {
+                var preference = DWMWCP_ROUNDSMALL;
+                DwmSetWindowAttribute(this.Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(uint));
+            }
         }
 
         /// <summary>

@@ -153,6 +153,7 @@
     <Compile Include="Themes\DarkTheme.cs" />
     <Compile Include="Themes\LightTheme.cs" />
     <Compile Include="Themes\Theme.cs" />
+    <Compile Include="WinApi\Uxtheme.cs" />
     <Compile Include="VersionInfo.cs" />
     <Compile Include="WinApi\Dwmapi.cs" />
     <Compile Include="WinApi\User32.cs" />

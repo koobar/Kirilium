@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using static Kirilium.WinApi.Dwmapi;
+using static Kirilium.WinApi.Uxtheme;
 
 namespace Kirilium.Themes
 {
@@ -55,19 +56,49 @@ namespace Kirilium.Themes
         }
 
         /// <summary>
+        /// 指定されたフォームのタイトルバー周りの配色設定を更新する。
+        /// </summary>
+        /// <param name="form"></param>
+        private void UpdateWindowTitleBarTheme(Form form)
+        {
+            if (this.UseDarkWindowTitleBar)
+            {
+                if (OperatingSystem.IsWindows11())
+                {
+                    DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, new[] { 1 }, 4);
+                    SetPreferredAppMode(UXTHEME_APPMODE_FORCEDARK);
+                }
+                else
+                {
+                    // Windows 10 20H1以前に使用されていた属性でエラーが返された場合、20H1以降の属性で試す。
+                    if (DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, new[] { 1 }, 4) != 0)
+                    {
+                        DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, new[] { 1 }, 4);
+                    }
+
+                    AllowDarkModeForApp(true);
+                }
+            }
+            else
+            {
+                if (OperatingSystem.IsWindows11())
+                {
+                    SetPreferredAppMode(UXTHEME_APPMODE_FORCELIGHT);
+                }
+                else
+                {
+                    AllowDarkModeForApp(false);
+                }
+            }
+        }
+
+        /// <summary>
         /// 指定されたフォームにテーマを反映する。
         /// </summary>
         /// <param name="form"></param>
         public virtual void Apply(Form form)
         {
-            if (this.UseDarkWindowTitleBar)
-            {
-                // Windows 10 20H1以前に使用されていた属性でエラーが返された場合、20H1以降の属性で試す。
-                if (DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, new[] { 1 }, 4) != 0)
-                {
-                    DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, new[] { 1 }, 4);
-                }
-            }
+            UpdateWindowTitleBarTheme(form);
 
             form.BackColor = GetColor(ColorKeys.WindowBackColor);
             form.Font = SystemFonts.CaptionFont;

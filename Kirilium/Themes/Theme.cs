@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static Kirilium.WinApi.Dwmapi;
 
 namespace Kirilium.Themes
 {
     public class Theme
     {
-        // 非公開定数
-        private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
-        private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
-
         // 非公開フィールド
         protected readonly Dictionary<ColorKeys, Color> colorTable;
 
@@ -59,9 +54,10 @@ namespace Kirilium.Themes
             return Color.Black;
         }
 
-        [DllImport("DwmApi")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
-
+        /// <summary>
+        /// 指定されたフォームにテーマを反映する。
+        /// </summary>
+        /// <param name="form"></param>
         public virtual void Apply(Form form)
         {
             if (this.UseDarkWindowTitleBar)

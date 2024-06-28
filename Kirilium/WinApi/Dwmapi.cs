@@ -11,7 +11,13 @@ namespace Kirilium.WinApi
         public const uint DWMWCP_ROUND = 2;
         public const uint DWMWCP_ROUNDSMALL = 3;
 
+        public const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+        public const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern long DwmSetWindowAttribute(IntPtr hwnd, uint attribute, ref uint pvAttribute, uint cbAttribute);
+
+        [DllImport("DwmApi")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
     }
 }

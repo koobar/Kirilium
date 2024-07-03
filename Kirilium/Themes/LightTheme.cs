@@ -115,6 +115,9 @@ namespace Kirilium.Themes
 
             // ラベルの配色
             SetColor(ColorKeys.LabelBackColor, windowBackColor);
+
+            // パネルの配色
+            SetColor(ColorKeys.PanelBackColor, windowBackColor);
         }
     }
 }

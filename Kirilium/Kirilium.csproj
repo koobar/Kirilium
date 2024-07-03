@@ -80,6 +80,9 @@
     <Compile Include="Controls\KListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\KPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\KSeekBar.cs">
       <SubType>Component</SubType>
     </Compile>

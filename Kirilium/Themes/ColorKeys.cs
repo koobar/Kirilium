@@ -102,5 +102,8 @@
 
         // ラベル
         LabelBackColor,
+
+        // パネル
+        PanelBackColor,
     }
 }

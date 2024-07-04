@@ -56,6 +56,11 @@ namespace Kirilium.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new BorderStyle BorderStyle { get; set; }
 
+        /// <summary>
+        /// 列ヘッダのリサイズを無効化するかどうか
+        /// </summary>
+        public bool DisableColumnHeaderResize { set; get; }
+
         #endregion
 
         /// <summary>
@@ -286,6 +291,22 @@ namespace Kirilium.Controls
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
                 backColor,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        }
+
+        /// <summary>
+        /// 列の幅が変更される場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnColumnWidthChanging(ColumnWidthChangingEventArgs e)
+        {
+            if (this.DisableColumnHeaderResize)
+            {
+                e.Cancel = true;
+                e.NewWidth = this.Columns[e.ColumnIndex].Width;
+                return;
+            }
+
+            base.OnColumnWidthChanging(e);
         }
 
         /// <summary>

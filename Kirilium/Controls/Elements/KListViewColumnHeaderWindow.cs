@@ -1,8 +1,6 @@
-﻿using Kirilium.Themes;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using static Kirilium.WinApi.User32;
 using static Kirilium.WinApi.WindowMessages;
 
 namespace Kirilium.Controls.Elements

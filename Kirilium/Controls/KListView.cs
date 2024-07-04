@@ -256,7 +256,7 @@ namespace Kirilium.Controls
             {
                 backColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewColumnHeaderBackColorMouseClick);
             }
-            else if (this.flagColumnHeaderMouseMove)
+            else if (this.flagColumnHeaderMouseMove && this.HeaderStyle == ColumnHeaderStyle.Clickable)
             {
                 if (e.Bounds.Contains(this.columnHeaderMousePoint))
                 {

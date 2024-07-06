@@ -32,19 +32,24 @@ namespace SampleApplication
             result.Dock = DockStyle.Fill;
             result.FullRowSelect = true;
             result.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            result.DisableColumnHeaderResize = true;
+            result.MaximumColumnHeaderWidth = 100;
 
             var contextMenu = new KContextMenuStrip();
             contextMenu.Items.Add(new KToolStripMenuItem() { Text = "Undo(&U)", ShortcutKeys = Keys.Control | Keys.Z });
 
             result.ContextMenuStrip = contextMenu;
 
-            result.Columns.Add(new ColumnHeader() { Text = "Column 1", Width = -2 });
+            result.Columns.Add(new ColumnHeader() { Text = "Column 1", Width = -1 });
             result.Columns.Add(new ColumnHeader() { Text = "Column 2", Width = -2 });
 
             for (int i = 0; i < 10; ++i)
             {
                 result.Items.Add(new ListViewItem() { Text = $"Item {i}", SubItems = { "SubItem 1", "SubItem 2" } });
+            }
+
+            if (view == View.Details)
+            {
+                result.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
 
             return result;

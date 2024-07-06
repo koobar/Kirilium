@@ -11,6 +11,9 @@ namespace Kirilium.Controls
 {
     public class KListView : ListView
     {
+        // 非公開定数
+        private const int MEASURE_TEXT_MARGIN = 5;
+
         // 非公開フィールド
         private KListViewColumnHeaderWindow columnHeaderWindow;
         private Point columnHeaderMousePoint;
@@ -30,7 +33,9 @@ namespace Kirilium.Controls
             base.OwnerDraw = true;
             base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor);
 
-            // ダミーを追加
+            this.MaximumColumnHeaderWidth = -1;
+
+            // テーマ変更時の処理を設定
             ThemeManager.ThemeChanged += OnThemeChanged;
         }
 
@@ -63,7 +68,86 @@ namespace Kirilium.Controls
         /// </summary>
         public bool DisableColumnHeaderResize { set; get; }
 
+        /// <summary>
+        /// 列ヘッダの幅の最大値を示す。-1の場合は最大値を設定していないものとする。
+        /// </summary>
+        public int MaximumColumnHeaderWidth { set; get; }
+
         #endregion
+
+        /// <summary>
+        /// 列の幅を、指定されたサイズ変更スタイルで示されたスタイルで変更する。
+        /// </summary>
+        /// <param name="columnHeaderAutoResizeStyle">サイズ変更スタイル</param>
+        public new void AutoResizeColumns(ColumnHeaderAutoResizeStyle columnHeaderAutoResizeStyle)
+        {
+            if (columnHeaderAutoResizeStyle == ColumnHeaderAutoResizeStyle.ColumnContent)
+            {
+                for (int columnIndex = 0; columnIndex < this.Columns.Count; ++columnIndex)
+                {
+                    var columnSize = Renderer.MeasureText(this.Columns[columnIndex].Text, this.Font);
+                    int maxWidth = columnSize.Width + MEASURE_TEXT_MARGIN;
+
+                    for (int itemIndex = 0; itemIndex < this.Items.Count; ++itemIndex)
+                    {
+                        string text = string.Empty;
+
+                        if (columnIndex == 0)
+                        {
+                            text = this.Items[itemIndex].Text;
+                        }
+                        else
+                        {
+                            text = this.Items[itemIndex].SubItems[columnIndex - 1].Text;
+                        }
+
+                        var size = Renderer.MeasureText(text, this.Items[itemIndex].Font);
+                        var width = size.Width + MEASURE_TEXT_MARGIN;
+
+                        if (width > maxWidth)
+                        {
+                            maxWidth = width;
+                        }
+                    }
+
+                    if (this.Columns[columnIndex].Width != -2)
+                    {
+                        this.Columns[columnIndex].Width = LimitWidth(maxWidth);
+                    }
+                }
+            }
+            else if (columnHeaderAutoResizeStyle == ColumnHeaderAutoResizeStyle.HeaderSize)
+            {
+                for (int columnIndex = 0; columnIndex < this.Columns.Count; ++columnIndex)
+                {
+                    var size = Renderer.MeasureText(this.Columns[columnIndex].Text, this.Font);
+                    var width = LimitWidth(size.Width + MEASURE_TEXT_MARGIN);
+
+                    if (this.Columns[columnIndex].Width != -2)
+                    {
+                        this.Columns[columnIndex].Width = width;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 指定された幅を、設定された有効範囲内で制限をかけて返す。
+        /// </summary>
+        /// <param name="width"></param>
+        /// <returns></returns>
+        protected virtual int LimitWidth(int width)
+        {
+            if (this.MaximumColumnHeaderWidth >= 0)
+            {
+                if (width > this.MaximumColumnHeaderWidth)
+                {
+                    width = this.MaximumColumnHeaderWidth;
+                }
+            }
+
+            return width;
+        }
 
         /// <summary>
         /// テーマが変更された場合の処理
@@ -314,8 +398,12 @@ namespace Kirilium.Controls
             if (this.DisableColumnHeaderResize)
             {
                 e.Cancel = true;
-                e.NewWidth = this.Columns[e.ColumnIndex].Width;
+                e.NewWidth = LimitWidth(this.Columns[e.ColumnIndex].Width);
                 return;
+            }
+            else
+            {
+                e.NewWidth = LimitWidth(e.NewWidth);
             }
 
             base.OnColumnWidthChanging(e);

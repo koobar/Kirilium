@@ -98,7 +98,7 @@ namespace Kirilium.Controls
                         }
                         else
                         {
-                            text = this.Items[itemIndex].SubItems[columnIndex - 1].Text;
+                            text = this.Items[itemIndex].SubItems[columnIndex].Text;
                         }
 
                         var size = Renderer.MeasureText(text, this.Items[itemIndex].Font);

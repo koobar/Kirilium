@@ -25,8 +25,10 @@ namespace Kirilium.Controls
             // 描画設定
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            base.DoubleBuffered = true;
             base.BorderStyle = BorderStyle.None;
             base.OwnerDraw = true;
+            base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor);
 
             // ダミーを追加
             ThemeManager.ThemeChanged += OnThemeChanged;
@@ -70,6 +72,8 @@ namespace Kirilium.Controls
         /// <param name="e"></param>
         private void OnThemeChanged(object sender, EventArgs e)
         {
+            base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor);
+
             Refresh();          // Invalidate()だと列ヘッダ部分の再描画が行われない。
         }
 
@@ -87,6 +91,45 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
+        /// 描画処理
+        /// </summary>
+        /// <param name="deviceContext"></param>
+        /// <param name="clip"></param>
+        private void Draw(Graphics deviceContext, Rectangle clip, IntPtr handle)
+        {
+            // 背景を塗りつぶす。
+            Renderer.FillRect(deviceContext, clip, ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor));
+
+            IntPtr hdc = deviceContext.GetHdc();
+
+            if (hdc == IntPtr.Zero)
+            {
+                return;
+            }
+
+            try
+            {
+                var msg = Message.Create(this.Handle, WM_PAINT, hdc, (IntPtr)(PRF_CHILDREN | PRF_CLIENT | PRF_ERASEBKGND));
+
+                // メッセージをウィンドウプロシージャに送信
+                DefWndProc(ref msg);
+            }
+            finally
+            {
+                deviceContext.ReleaseHdc();
+            }
+
+            if (handle == this.Handle)
+            {
+                using (var controlDC = CreateGraphics())
+                {
+                    // 境界線を描画する。
+                    PaintControlBorder(controlDC, this.DisplayRectangle);
+                }
+            }
+        }
+
+        /// <summary>
         /// コントロールを描画する。
         /// </summary>
         /// <param name="msg"></param>
@@ -96,17 +139,19 @@ namespace Kirilium.Controls
             if (msg.WParam == IntPtr.Zero)
             {
                 var paintStruct = new PAINTSTRUCT();
-                var deviceContext = BeginPaint(msg.HWnd, ref paintStruct);
+                var paintHandle = BeginPaint(msg.HWnd, ref paintStruct);
 
                 try
                 {
-                    using (var bufferedGraphics = BufferedGraphicsManager.Current.Allocate(deviceContext, this.ClientRectangle))
+                    using (var bufferedGraphics = BufferedGraphicsManager.Current.Allocate(paintHandle, this.ClientRectangle))
                     {
                         var clip = Rectangle.FromLTRB(paintStruct.rcPaint.Left, paintStruct.rcPaint.Top, paintStruct.rcPaint.Right, paintStruct.rcPaint.Bottom);
 
-                        // 描画処理
+                        // バッファ領域に描画する。
                         bufferedGraphics.Graphics.SetClip(clip);
-                        Draw(bufferedGraphics.Graphics, clip);
+                        Draw(bufferedGraphics.Graphics, clip, msg.HWnd);
+
+                        // バッファ領域に描画された内容をデバイスに書き込む。
                         bufferedGraphics.Render();
                     }
                 }
@@ -123,42 +168,26 @@ namespace Kirilium.Controls
             {
                 using (var g = Graphics.FromHdc(msg.WParam))
                 {
-                    Draw(g, this.ClientRectangle);
+                    Draw(g, this.ClientRectangle, msg.WParam);
                 }
             }
         }
 
         /// <summary>
-        /// 描画処理
+        /// コントロールの境界線を描画する。
         /// </summary>
-        /// <param name="graphics"></param>
-        /// <param name="clip"></param>
-        private void Draw(Graphics graphics, Rectangle clip)
+        /// <param name="deviceContext"></param>
+        /// <param name="displayRect"></param>
+        private void PaintControlBorder(Graphics deviceContext, Rectangle displayRect)
         {
-            // 背景を塗りつぶす。
-            Renderer.FillRect(graphics, clip, ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor));
-
             // 境界線を描画する。
-            Renderer.DrawRect(graphics, clip.X, clip.Y, clip.Width - 1, clip.Height - 1, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-
-            IntPtr hdc = graphics.GetHdc();
-
-            if (hdc == IntPtr.Zero)
-            {
-                return;
-            }
-
-            try
-            {
-                var msg = Message.Create(this.Handle, WM_PAINT, hdc, (IntPtr)(PRF_CHILDREN | PRF_CLIENT | PRF_ERASEBKGND));
-
-                // メッセージをウィンドウプロシージャに送信
-                DefWndProc(ref msg);
-            }
-            finally
-            {
-                graphics.ReleaseHdc();
-            }
+            Renderer.DrawRect(
+                deviceContext, 
+                displayRect.X,
+                displayRect.Y,
+                displayRect.Width - 1, 
+                displayRect.Height - 1, 
+                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
         }
 
         /// <summary>
@@ -188,31 +217,6 @@ namespace Kirilium.Controls
                 textColor,
                 backColor,
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
-
-            if (base.View == View.List)
-            {
-                // 境界線（左）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.X, e.Bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-
-                if (e.ItemIndex == 0)
-                {
-                    // 境界線（上）の描画
-                    Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.Right, e.Bounds.Y, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-                }
-            }
-            else if (base.View == View.Tile)
-            {
-                // 境界線（左）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.X, e.Bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-            }
-            else if (base.View == View.LargeIcon)
-            {
-                // 境界線（左）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.X, e.Bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-
-                // 境界線（上）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.X, 0, e.Bounds.Right, 0, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-            }
         }
 
         /// <summary>
@@ -242,18 +246,6 @@ namespace Kirilium.Controls
                 textColor,
                 backColor,
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
-
-            if (e.ColumnIndex == 0)
-            {
-                // 境界線（左）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.X, e.Bounds.Bottom - 1, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-            }
-
-            if (e.ColumnIndex == this.Columns.Count - 1)
-            {
-                // 境界線（右）の描画
-                Renderer.DrawLine(e.Graphics, e.Bounds.Right - 1, e.Bounds.Y, e.Bounds.Right - 1, e.Bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
-            }
         }
 
         /// <summary>
@@ -394,6 +386,8 @@ namespace Kirilium.Controls
                 case WM_MOUSEWHEEL:
                     base.WndProc(ref m);
                     Invalidate();
+                    break;
+                case WM_ERASEBKGND:         // 無視
                     break;
                 default:
                     base.WndProc(ref m);

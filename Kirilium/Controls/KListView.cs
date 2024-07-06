@@ -280,6 +280,20 @@ namespace Kirilium.Controls
                 Renderer.DrawLine(e.Graphics, e.Bounds.Right - 1, e.Bounds.Y, e.Bounds.Right - 1, e.Bounds.Bottom - 1, borderColor);
             }
 
+            TextFormatFlags textFormatFlags = TextFormatFlags.Default;
+            switch (this.Columns[e.ColumnIndex].TextAlign)
+            {
+                case HorizontalAlignment.Center:
+                    textFormatFlags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
+                    break;
+                case HorizontalAlignment.Left:
+                    textFormatFlags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+                    break;
+                case HorizontalAlignment.Right:
+                    textFormatFlags = TextFormatFlags.Right | TextFormatFlags.VerticalCenter;
+                    break;
+            }
+
             // テキストを描画
             Renderer.DrawText(
                 e.Graphics,
@@ -288,7 +302,7 @@ namespace Kirilium.Controls
                 e.Bounds,
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
                 backColor,
-                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                textFormatFlags);
         }
 
         /// <summary>

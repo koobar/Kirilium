@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Kirilium.Dialogs
 {
-    public static class ThemedMessageBox
+    public static class KMessageBox
     {
         // 非公開フィールド
         private static readonly Dictionary<string, Dictionary<string, string>> buttonTextTranslateWordDictionary = new Dictionary<string, Dictionary<string, string>>();

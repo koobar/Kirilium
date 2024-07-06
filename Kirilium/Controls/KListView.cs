@@ -248,6 +248,12 @@ namespace Kirilium.Controls
                 // 境界線（左）の描画
                 Renderer.DrawLine(e.Graphics, e.Bounds.X, e.Bounds.Y, e.Bounds.X, e.Bounds.Bottom - 1, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
             }
+
+            if (e.ColumnIndex == this.Columns.Count - 1)
+            {
+                // 境界線（右）の描画
+                Renderer.DrawLine(e.Graphics, e.Bounds.Right - 1, e.Bounds.Y, e.Bounds.Right - 1, e.Bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
+            }
         }
 
         /// <summary>

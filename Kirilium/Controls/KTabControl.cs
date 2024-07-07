@@ -164,6 +164,7 @@ namespace Kirilium.Controls
         private void OnHeaderSelectedIndexChanged(object sender, EventArgs e)
         {
             this.contentRenderer.SelectedIndex = this.headerRenderer.SelectedIndex;
+            this.selectedIndex = this.headerRenderer.SelectedIndex;
         }
 
         /// <summary>

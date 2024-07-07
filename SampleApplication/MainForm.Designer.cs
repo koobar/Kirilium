@@ -212,7 +212,7 @@ namespace SampleApplication
             this.kSeekBar1.DecrementStep = 3;
             this.kSeekBar1.IncrementStep = 3;
             this.kSeekBar1.Location = new System.Drawing.Point(221, 52);
-            this.kSeekBar1.MaximumValue = 100;
+            this.kSeekBar1.MaximumValue = 1000;
             this.kSeekBar1.MinimumValue = 0;
             this.kSeekBar1.Name = "kSeekBar1";
             this.kSeekBar1.Size = new System.Drawing.Size(567, 20);

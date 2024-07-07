@@ -14,6 +14,7 @@ namespace Kirilium.Controls
         public event EventHandler MaximumValueChanged;
         public event EventHandler MinimumValueChanged;
         public event EventHandler ValueChanged;
+        public event EventHandler Seek;
 
         // コンストラクタ
         public KSeekBar()
@@ -27,11 +28,8 @@ namespace Kirilium.Controls
 
             this.slidePanel.Dock = DockStyle.Fill;
             this.slidePanel.Parent = this;
-            this.slidePanel.ValueChanged += delegate
-            {
-                OnValueChanged();
-            };
-
+            this.slidePanel.ValueChanged += OnValueChanged;
+            this.slidePanel.SeekCompleted += OnSeekCompleted;
             ThemeManager.ThemeChanged += OnThemeChanged;
         }
 
@@ -120,12 +118,21 @@ namespace Kirilium.Controls
             set
             {
                 this.slidePanel.Value = value;
-
-                OnValueChanged();
             }
             get
             {
                 return this.slidePanel.Value;
+            }
+        }
+
+        /// <summary>
+        /// シーク操作中であるかどうかを示す。
+        /// </summary>
+        public bool IsSeeking
+        {
+            get
+            {
+                return this.slidePanel.IsSeeking;
             }
         }
 
@@ -176,9 +183,19 @@ namespace Kirilium.Controls
         /// <summary>
         /// 値が変更された場合の処理
         /// </summary>
-        protected virtual void OnValueChanged()
+        protected virtual void OnValueChanged(object sender, EventArgs e)
         {
-            this.ValueChanged?.Invoke(this, EventArgs.Empty);
+            this.ValueChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// シーク操作が終了した場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSeekCompleted(object sender, EventArgs e)
+        {
+            this.Seek?.Invoke(sender, e);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Kirilium.Controls.Elements
 
         // イベント
         public event EventHandler ValueChanged;
+        public event EventHandler SeekCompleted;
 
         // 非公開フィールド
         private Rectangle thumbRect;
@@ -95,11 +96,11 @@ namespace Kirilium.Controls.Elements
                 return this.minimumValue;
             }
         }
-
+        
         /// <summary>
-        /// 値
+        /// 内部値
         /// </summary>
-        public int Value
+        protected int InternalValue
         {
             set
             {
@@ -111,6 +112,24 @@ namespace Kirilium.Controls.Elements
             get
             {
                 return this.value;
+            }
+        }
+
+        /// <summary>
+        /// 値
+        /// </summary>
+        public int Value
+        {
+            set
+            {
+                if (!this.IsSeeking)
+                {
+                    this.InternalValue = value;
+                }
+            }
+            get
+            {
+                return this.InternalValue;
             }
         }
 
@@ -140,7 +159,7 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         private int XPosToValue(int x)
         {
-            var a = ((double)x / this.Width) * 100;
+            var a = ((double)x / this.Width) * this.maximumValue;
 
             var value = this.MinimumValue + (int)a;
             if (value < this.MinimumValue)
@@ -179,8 +198,8 @@ namespace Kirilium.Controls.Elements
             if (this.IsSeeking)
             {
                 this.IsSeeking = false;
-
                 this.ValueChanged?.Invoke(this, EventArgs.Empty);
+                this.SeekCompleted?.Invoke(this, EventArgs.Empty);
             }
 
             Invalidate();
@@ -192,7 +211,7 @@ namespace Kirilium.Controls.Elements
 
             if (this.IsSeeking)
             {
-                this.Value = XPosToValue(e.Location.X);
+                this.InternalValue = XPosToValue(e.Location.X);
             }
         }
 

@@ -169,7 +169,7 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         private int YPosToValue(int y)
         {
-            var a = ((double)y / this.Height) * 100;
+            var a = ((double)y / this.Height) * this.maximumValue;
 
             var value = this.MinimumValue + (int)a;
             if (value < this.MinimumValue)
@@ -191,7 +191,7 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         private int XPosToValue(int x)
         {
-            var a = ((double)x / this.Width) * 100;
+            var a = ((double)x / this.Width) * this.maximumValue;
 
             var value = this.MinimumValue + (int)a;
             if (value < this.MinimumValue)

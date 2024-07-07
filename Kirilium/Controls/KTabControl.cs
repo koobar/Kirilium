@@ -13,6 +13,9 @@ namespace Kirilium.Controls
         private readonly NotificationList<KTabPage> tabPageCollection;
         private int selectedIndex;
 
+        // イベント
+        public event EventHandler SelectedIndexChanged;
+
         // コンストラクタ
         public KTabControl()
         {
@@ -71,6 +74,8 @@ namespace Kirilium.Controls
             {
                 this.selectedIndex = value;
                 this.headerRenderer.SelectedIndex = value;
+
+                OnSelectedIndexChanged(this, EventArgs.Empty);
             }
             get
             {
@@ -165,6 +170,8 @@ namespace Kirilium.Controls
         {
             this.contentRenderer.SelectedIndex = this.headerRenderer.SelectedIndex;
             this.selectedIndex = this.headerRenderer.SelectedIndex;
+
+            OnSelectedIndexChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -175,6 +182,11 @@ namespace Kirilium.Controls
         private void OnTabCloseButtonPressed(object sender, TabCloseEventArgs e)
         {
             CloseTabAt(e.CloseRequestedTabIndex);
+        }
+
+        protected virtual void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.SelectedIndexChanged?.Invoke(sender, e);
         }
     }
 }

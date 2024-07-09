@@ -25,6 +25,27 @@ namespace Kirilium.Controls
             ThemeManager.ThemeChanged -= OnThemeChanged;
         }
 
+        /// <summary>
+        /// コントロールのテキスト
+        /// </summary>
+        public new string Text
+        {
+            set
+            {
+                base.Text = value;
+                Invalidate();
+            }
+            get
+            {
+                return base.Text;
+            }
+        }
+
+        /// <summary>
+        /// テーマが変更された場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnThemeChanged(object sender, EventArgs e)
         {
             Invalidate();

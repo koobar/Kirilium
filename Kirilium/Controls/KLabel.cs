@@ -28,6 +28,24 @@ namespace Kirilium.Controls
             ThemeManager.ThemeChanged -= OnThemeChanged;
         }
 
+        #region プロパティ
+
+        /// <summary>
+        /// コントロールのテキスト
+        /// </summary>
+        public new string Text
+        {
+            set
+            {
+                base.Text = value;
+                Invalidate();
+            }
+            get
+            {
+                return base.Text;
+            }
+        }
+
         /// <summary>
         /// テキストの位置
         /// </summary>
@@ -44,6 +62,12 @@ namespace Kirilium.Controls
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// TextFormatFlagsを取得する。
+        /// </summary>
+        /// <returns></returns>
         private TextFormatFlags GetTextFormatFlags()
         {
             switch (this.textLayout)
@@ -71,6 +95,11 @@ namespace Kirilium.Controls
             }
         }
 
+        /// <summary>
+        /// テーマが変更された場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnThemeChanged(object sender, EventArgs e)
         {
             Invalidate();

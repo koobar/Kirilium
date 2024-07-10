@@ -147,16 +147,6 @@ namespace Kirilium.Controls.Elements
             this.currentColumnHeaderAutoResizeStyle = columnHeaderAutoResizeStyle;
         }
 
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            if (this.FillLastColumnHeader)
-            {
-                AutoResizeColumns(this.currentColumnHeaderAutoResizeStyle);
-            }
-            
-            base.OnSizeChanged(e);
-        }
-
         /// <summary>
         /// 指定された幅を、設定された有効範囲内で制限をかけて返す。
         /// </summary>
@@ -418,6 +408,20 @@ namespace Kirilium.Controls.Elements
         {
             Invalidate();
             base.OnColumnWidthChanged(e);
+        }
+
+        /// <summary>
+        /// コントロールのサイズが変更された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            if (this.FillLastColumnHeader)
+            {
+                AutoResizeColumns(this.currentColumnHeaderAutoResizeStyle);
+            }
+
+            base.OnSizeChanged(e);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Kirilium.Controls.Elements;
 using Kirilium.Themes;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,6 +10,12 @@ namespace Kirilium.Controls
     {
         // 非公開フィールド
         private readonly InternalListView internalListView;
+
+        // イベント
+        public new event EventHandler Click;
+        public new event EventHandler DoubleClick;
+        public event ColumnClickEventHandler ColumnClick;
+        public event EventHandler SelectedIndexChanged;
 
         // コンストラクタ
         public KListView()
@@ -22,6 +29,10 @@ namespace Kirilium.Controls
             this.internalListView = new InternalListView();
             this.internalListView.Parent = this;
             this.internalListView.Dock = DockStyle.Fill;
+            this.internalListView.SelectedIndexChanged += OnSelectedIndexChanged;
+            this.internalListView.Click += OnClick;
+            this.internalListView.ColumnClick += OnColumnClick;
+            this.internalListView.DoubleClick += OnDoubleClick;
 
             // 描画設定
             SetStyle(ControlStyles.UserPaint, true);
@@ -89,6 +100,36 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
+        /// ユーザーが列ヘッダをドラッグして、並び替えることができるかどうかを示す。
+        /// </summary>
+        public bool AllowColumnReorder
+        {
+            set
+            {
+                this.internalListView.AllowColumnReorder = value;
+            }
+            get
+            {
+                return this.internalListView.AllowColumnReorder;
+            }
+        }
+
+        /// <summary>
+        /// 複数のアイテムが選択できるかどうかを示す。
+        /// </summary>
+        public bool MultiSelect
+        {
+            set
+            {
+                this.internalListView.MultiSelect = value;
+            }
+            get
+            {
+                return this.internalListView.MultiSelect;
+            }
+        }
+
+        /// <summary>
         /// アイテム
         /// </summary>
         public ListView.ListViewItemCollection Items
@@ -96,6 +137,17 @@ namespace Kirilium.Controls
             get
             {
                 return this.internalListView.Items;
+            }
+        }
+
+        /// <summary>
+        /// コントロール内の選択された項目のインデックスを示す。
+        /// </summary>
+        public ListView.SelectedIndexCollection SelectedIndices
+        {
+            get
+            {
+                return this.internalListView.SelectedIndices;
             }
         }
 
@@ -146,11 +198,78 @@ namespace Kirilium.Controls
 
         #endregion
 
+        /// <summary>
+        /// コントロールの表面全体を無効化して、コントロールを再描画する。
+        /// </summary>
+        public new void Invalidate()
+        {
+            this.internalListView.Invalidate();
+            base.Invalidate();
+        }
+
+        /// <summary>
+        /// コントロールの表面の指定された領域を無効化して、コントロールを再描画する。
+        /// </summary>
+        /// <param name="rectangle"></param>
+        public new void Invalidate(Rectangle rectangle)
+        {
+            this.internalListView.Invalidate(rectangle);
+            base.Invalidate(rectangle);
+        }
+
+        /// <summary>
+        /// 列の幅を、指定されたサイズ変更スタイルで示されたスタイルで変更する。
+        /// </summary>
+        /// <param name="autoResizeStyle"></param>
         public void AutoResizeColumns(ColumnHeaderAutoResizeStyle autoResizeStyle)
         {
             this.internalListView.AutoResizeColumns(autoResizeStyle);
         }
 
+        /// <summary>
+        /// クリックされた場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClick(object sender, EventArgs e)
+        {
+            this.Click?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// ダブルクリックされた場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDoubleClick(object sender, EventArgs e)
+        {
+            this.DoubleClick?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// 列ヘッダがクリックされた場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            this.ColumnClick?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// 選択インデックスが変更された場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.SelectedIndexChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// 描画処理
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Renderer.DrawRect(

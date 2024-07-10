@@ -12,7 +12,7 @@ namespace Kirilium.Controls.Elements
         public event EventHandler ColumnHeaderMouseLeave;
 
         // コンストラクタ
-        public KListViewColumnHeaderWindow(IntPtr hHeader, KListView parent)
+        public KListViewColumnHeaderWindow(IntPtr hHeader, InternalListView parent)
         {
             this.Parent = parent;
             AssignHandle(hHeader);
@@ -23,7 +23,7 @@ namespace Kirilium.Controls.Elements
         /// <summary>
         /// 親コントロール
         /// </summary>
-        public KListView Parent { private set; get; }
+        public InternalListView Parent { private set; get; }
 
         #endregion
 
@@ -40,8 +40,6 @@ namespace Kirilium.Controls.Elements
                     break;
                 case WM_MOUSEMOVE:
                     OnColumnHeaderMouseMove(new Point(m.LParam.ToInt32()));
-                    break;
-                case WM_ERASEBKGND:
                     break;
             }
 

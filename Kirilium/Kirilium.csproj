@@ -48,6 +48,9 @@
     <Compile Include="Controls\Elements\InternalListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Elements\InternalListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Elements\InternalTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,7 +81,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\KListView.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KListView.Designer.cs">
+      <DependentUpon>KListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\KPanel.cs">
       <SubType>Component</SubType>

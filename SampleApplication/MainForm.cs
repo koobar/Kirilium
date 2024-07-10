@@ -32,7 +32,8 @@ namespace SampleApplication
             result.Dock = DockStyle.Fill;
             result.FullRowSelect = true;
             result.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            result.MaximumColumnHeaderWidth = 100;
+            result.MaximumColumnHeaderWidth = -1;
+            result.FillLastColumnHeader = true;
 
             var contextMenu = new KContextMenuStrip();
             contextMenu.Items.Add(new KToolStripMenuItem() { Text = "Undo(&U)", ShortcutKeys = Keys.Control | Keys.Z });

@@ -290,8 +290,9 @@ namespace Kirilium.Controls.Elements
         {
             if (e.Button == MouseButtons.Left)
             {
+                // 表示領域分の各アイテムの領域を取得する。
                 var n = GetNumItemsVisible();
-                var itemBounds = new Rectangle[n];
+                var itemBounds = new Rectangle[n + 1];
                 for (int i = 0; i <= n; ++i)
                 {
                     int index = i + this.visibleFirstItemIndex;
@@ -303,6 +304,8 @@ namespace Kirilium.Controls.Elements
                     itemBounds[i] = GetItemBounds(index);
                 }
 
+                // 各アイテムの領域と、マウスの座標が接触しているかを判定し、
+                // 接触していたアイテムのインデックスを、選択されたアイテムのインデックスとする。
                 int selected = -1;
                 for (int i = 0; i < n; ++i)
                 {

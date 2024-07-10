@@ -56,6 +56,35 @@ namespace SampleApplication
             return result;
         }
 
+        /// <summary>
+        /// Create KDetailsList.
+        /// </summary>
+        /// <returns></returns>
+        private KDetailsList CreateKDetailsList()
+        {
+            var result = new KDetailsList();
+            result.Dock = DockStyle.Fill;
+            result.Columns.Add(new KColumnHeader(result));
+            result.Columns.Add(new KColumnHeader(result));
+            result.Columns[0].Text = "Column 1";
+            result.Columns[1].Text = "Column 2";
+
+            var contextMenu = new KContextMenuStrip();
+            contextMenu.Items.Add(new KToolStripMenuItem() { Text = "Undo(&U)", ShortcutKeys = Keys.Control | Keys.Z });
+            result.ContextMenuStrip = contextMenu;
+
+            for (int i = 0; i < 10; ++i)
+            {
+                var item = new KDetailsListItem();
+                item.SubItems.Add($"Item {i}");
+                item.SubItems.Add("SubItem");
+
+                result.Items.Add(item);
+            }
+
+            return result;
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             this.kTextBox1.Text = "Hello Kirilium!";
@@ -63,7 +92,7 @@ namespace SampleApplication
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - LargeIcon", CreateListView(View.LargeIcon)));
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - SmallIcon", CreateListView(View.SmallIcon)));
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - List", CreateListView(View.List)));
-            this.kTabControl1.TabPages.Add(new KTabPage("KListView - Details", CreateListView(View.Details)));
+            this.kTabControl1.TabPages.Add(new KTabPage("KDetailsList", CreateKDetailsList()));
 
             base.OnLoad(e);
         }

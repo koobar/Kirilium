@@ -11,6 +11,7 @@ namespace Kirilium.Themes
             var windowBackColor = Color.FromArgb(245, 245, 245);
             var controlBackColorNormal = Color.FromArgb(235, 235, 235);
             var controlBackColorDisabled = Color.FromArgb(195, 195, 195);
+            var highlightColor = Color.FromArgb(0, 122, 204);
             var normalTextColor = Color.FromArgb(5, 5, 5);
             var highlightTextColor = Color.FromArgb(240, 240, 240);
             var disabledTextColor = Color.FromArgb(162, 164, 165);
@@ -22,7 +23,7 @@ namespace Kirilium.Themes
             // コントロールの境界線の配色
             SetColor(ColorKeys.ApplicationBorderNormal, Color.FromArgb(204, 206, 219));
             SetColor(ColorKeys.ApplicationBorderDisabled, Color.FromArgb(204, 206, 219));
-            SetColor(ColorKeys.ApplicationBorderHighlight, Color.FromArgb(0, 122, 204));
+            SetColor(ColorKeys.ApplicationBorderHighlight, highlightColor);
 
             // コントロールのテキストの配色
             SetColor(ColorKeys.ApplicationTextNormal, normalTextColor);
@@ -62,7 +63,7 @@ namespace Kirilium.Themes
             // リストビューの配色
             SetColor(ColorKeys.ListViewBackColor, controlBackColorNormal);
             SetColor(ColorKeys.ListViewItemBackColorNormal, controlBackColorNormal);
-            SetColor(ColorKeys.ListViewItemBackColorSelected, Color.FromArgb(0, 122, 204));
+            SetColor(ColorKeys.ListViewItemBackColorSelected, highlightColor);
             SetColor(ColorKeys.ListViewColumnHeaderBackColorNormal, Color.FromArgb(240, 240, 240));
             SetColor(ColorKeys.ListViewColumnHeaderBackColorMouseOver, Color.FromArgb(201, 222, 245));
             SetColor(ColorKeys.ListViewColumnHeaderBackColorMouseClick, Color.FromArgb(191, 212, 235));
@@ -75,7 +76,7 @@ namespace Kirilium.Themes
             // プログレスバーの配色
             SetColor(ColorKeys.ProgressBarBackColorNormal, controlBackColorNormal);
             SetColor(ColorKeys.ProgressBarBackColorDisabled, controlBackColorDisabled);
-            SetColor(ColorKeys.ProgressBarForeColorNormal, Color.FromArgb(0, 122, 204));
+            SetColor(ColorKeys.ProgressBarForeColorNormal, highlightColor);
 
             // スクロールバーの配色
             SetColor(ColorKeys.ScrollBarBackColorNormal, controlBackColorNormal);
@@ -101,7 +102,7 @@ namespace Kirilium.Themes
             // タブコントロールの配色
             SetColor(ColorKeys.TabControlHeaderBackColorNormal, windowBackColor);
             SetColor(ColorKeys.TabControlHeaderBackColorHot, Color.FromArgb(28, 151, 234));
-            SetColor(ColorKeys.TabControlHeaderBackColorSelected, Color.FromArgb(0, 122, 204));
+            SetColor(ColorKeys.TabControlHeaderBackColorSelected, highlightColor);
             SetColor(ColorKeys.TabControlHeaderCloseButtonBackColorHot, Color.FromArgb(28, 151, 234));
             SetColor(ColorKeys.TabControlContentAreaBackColor, controlBackColorNormal);
 
@@ -111,13 +112,17 @@ namespace Kirilium.Themes
             // シークバーの配色
             SetColor(ColorKeys.SeekBarBackColor, controlBackColorNormal);
             SetColor(ColorKeys.SeekBarLineColor, Color.FromArgb(204, 206, 219));
-            SetColor(ColorKeys.SeekbarThumbColor, Color.FromArgb(0, 122, 204));
+            SetColor(ColorKeys.SeekbarThumbColor, highlightColor);
 
             // ラベルの配色
             SetColor(ColorKeys.LabelBackColor, windowBackColor);
 
             // パネルの配色
             SetColor(ColorKeys.PanelBackColor, windowBackColor);
+
+            // 詳細リストの配色
+            SetColor(ColorKeys.KDetailsListBackColor, controlBackColorNormal);
+            SetColor(ColorKeys.KDetailsListSelectedColor, highlightColor);
         }
     }
 }

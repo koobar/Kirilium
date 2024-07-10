@@ -25,8 +25,8 @@ namespace Kirilium.Controls
             this.slidePanel = new ScrollBarSlidePanel();
 
             this.Size = new Size(100, 15);
-            this.MaximumValue = 100;
-            this.MinimumValue = 0;
+            this.Maximum = 100;
+            this.Minimum = 0;
             this.Value = 0;
 
             this.slidePanel.Dock = DockStyle.Fill;
@@ -83,7 +83,7 @@ namespace Kirilium.Controls
         {
             get
             {
-                var p = ((double)this.Value - this.MinimumValue) / ((double)this.MaximumValue - this.MinimumValue) * 100;
+                var p = ((double)this.Value - this.Minimum) / ((double)this.Maximum - this.Minimum) * 100;
 
                 return (int)Math.Round(p);
             }
@@ -92,7 +92,7 @@ namespace Kirilium.Controls
         /// <summary>
         /// 最大値
         /// </summary>
-        public int MaximumValue
+        public int Maximum
         {
             set
             {
@@ -109,7 +109,7 @@ namespace Kirilium.Controls
         /// <summary>
         /// 最小値
         /// </summary>
-        public int MinimumValue
+        public int Minimum
         {
 
             set
@@ -166,9 +166,9 @@ namespace Kirilium.Controls
         {
             int value = this.Value + this.IncrementStep;
 
-            if (value > this.MaximumValue)
+            if (value > this.Maximum)
             {
-                value = this.MaximumValue;
+                value = this.Maximum;
             }
 
             this.Value = value;
@@ -181,9 +181,9 @@ namespace Kirilium.Controls
         {
             int value = this.Value - this.DecrementStep;
             
-            if (value < this.MinimumValue)
+            if (value < this.Minimum)
             {
-                value = this.MinimumValue;
+                value = this.Minimum;
             }
 
             this.Value = value;
@@ -207,13 +207,13 @@ namespace Kirilium.Controls
             int value = this.Value;
 
             value += e.Delta < 0 ? this.IncrementStep : -this.DecrementStep;
-            if (value < this.MinimumValue)
+            if (value < this.Minimum)
             {
-                value = this.MinimumValue;
+                value = this.Minimum;
             }
-            else if (value > this.MaximumValue)
+            else if (value > this.Maximum)
             {
-                value = this.MaximumValue;
+                value = this.Maximum;
             }
 
             this.Value = value;

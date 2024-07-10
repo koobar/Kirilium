@@ -105,5 +105,9 @@
 
         // パネル
         PanelBackColor,
+
+        // 詳細リスト
+        KDetailsListBackColor,
+        KDetailsListSelectedColor,
     }
 }

@@ -119,6 +119,10 @@ namespace Kirilium.Themes
 
             // パネルの配色
             SetColor(ColorKeys.PanelBackColor, windowBackColor);
+
+            // 詳細リストの配色
+            SetColor(ColorKeys.KDetailsListBackColor, controlBackColorNormal);
+            SetColor(ColorKeys.KDetailsListSelectedColor, highlight);
         }
     }
 }

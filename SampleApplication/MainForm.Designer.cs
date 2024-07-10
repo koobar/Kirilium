@@ -172,8 +172,8 @@ namespace SampleApplication
             this.khScrollBar1.DecrementStep = 3;
             this.khScrollBar1.IncrementStep = 3;
             this.khScrollBar1.Location = new System.Drawing.Point(13, 295);
-            this.khScrollBar1.MaximumValue = 100;
-            this.khScrollBar1.MinimumValue = 0;
+            this.khScrollBar1.Maximum = 100;
+            this.khScrollBar1.Minimum = 0;
             this.khScrollBar1.Name = "khScrollBar1";
             this.khScrollBar1.Size = new System.Drawing.Size(181, 15);
             this.khScrollBar1.TabIndex = 6;
@@ -187,8 +187,8 @@ namespace SampleApplication
             this.kvScrollBar1.DecrementStep = 3;
             this.kvScrollBar1.IncrementStep = 3;
             this.kvScrollBar1.Location = new System.Drawing.Point(200, 52);
-            this.kvScrollBar1.MaximumValue = 100;
-            this.kvScrollBar1.MinimumValue = 0;
+            this.kvScrollBar1.Maximum = 100;
+            this.kvScrollBar1.Minimum = 0;
             this.kvScrollBar1.Name = "kvScrollBar1";
             this.kvScrollBar1.Size = new System.Drawing.Size(15, 258);
             this.kvScrollBar1.TabIndex = 7;

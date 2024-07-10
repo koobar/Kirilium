@@ -45,6 +45,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Collection\NotificationList.cs" />
+    <Compile Include="Controls\Elements\KDetailsListColumnHeaderRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Elements\KDetailsListItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Elements\KDetailsListItemRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KColumnHeader.cs" />
+    <Compile Include="Controls\KDetailsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KDetailsList.Designer.cs">
+      <DependentUpon>KDetailsList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Elements\InternalListBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -74,6 +90,7 @@
     <Compile Include="Controls\KContextMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\KDetailsListItem.cs" />
     <Compile Include="Controls\KGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -168,6 +185,11 @@
     <Compile Include="WinApi\User32.cs" />
     <Compile Include="WinApi\WindowMessages.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\KDetailsList.resx">
+      <DependentUpon>KDetailsList.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

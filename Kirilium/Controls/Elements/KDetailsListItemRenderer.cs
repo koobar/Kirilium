@@ -13,7 +13,8 @@ namespace Kirilium.Controls.Elements
         private readonly NotificationList<KDetailsListItem> items;
         private readonly VScrollBar verticalScrollBar;
         private int visibleFirstItemIndex;
-        private int itemHeight;
+        private int itemHeight; 
+        private int scrollSpeed;
 
         // イベント
         public event EventHandler SelectedIndexChanged;
@@ -21,22 +22,22 @@ namespace Kirilium.Controls.Elements
         // コンストラクタ
         public KDetailsListItemRenderer(KDetailsListColumnHeaderRenderer columnHeaderRenderer)
         {
-            this.ItemHeight = 20;
-            this.ScrollSpeed = 3;
-            this.AutoScroll = false;
-
             this.visibleFirstItemIndex = 0;
-
             this.columnHeaderRenderer = columnHeaderRenderer;
-
             this.items = new NotificationList<KDetailsListItem>();
             this.items.ValueCollectionChanged += OnItemCollectionChanged;
 
+            // 縦スクロールバー
             this.verticalScrollBar = new VScrollBar();
             this.verticalScrollBar.Dock = DockStyle.Right;
             this.verticalScrollBar.Parent = this;
             this.verticalScrollBar.Minimum = 0;
             this.verticalScrollBar.Value = 0;
+
+            // 初期設定
+            this.ItemHeight = 15;
+            this.ScrollSpeed = 3;
+            this.AutoScroll = false;
 
             // 描画設定
             SetStyle(ControlStyles.UserPaint, true);
@@ -66,7 +67,19 @@ namespace Kirilium.Controls.Elements
         /// <summary>
         /// スクロール速度
         /// </summary>
-        public int ScrollSpeed { set; get; }
+        public int ScrollSpeed
+        {
+            set
+            {
+                this.scrollSpeed = value;
+                this.verticalScrollBar.SmallChange = value;
+                this.verticalScrollBar.LargeChange = value;
+            }
+            get
+            {
+                return this.scrollSpeed;
+            }
+        }
 
         /// <summary>
         /// アイテムの一覧を示す。
@@ -119,7 +132,7 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         protected virtual int GetNumItemsVisible()
         {
-            return this.ClientRectangle.Height / this.ItemHeight;
+            return (int)Math.Round(this.ClientRectangle.Height / (double)this.ItemHeight, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
@@ -328,7 +341,7 @@ namespace Kirilium.Controls.Elements
         /// <param name="e"></param>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            int n = GetNumItemsVisible() + 1;
+            int n = GetNumItemsVisible();
             int index = 0;
 
             if (e.Delta > 0)
@@ -340,7 +353,7 @@ namespace Kirilium.Controls.Elements
                 index = this.visibleFirstItemIndex + this.ScrollSpeed;
             }
 
-            if (index >= this.Items.Count - n)
+            if (index >= this.Items.Count - n )
             {
                 index = this.Items.Count - n;
             }
@@ -368,8 +381,15 @@ namespace Kirilium.Controls.Elements
         /// <param name="e"></param>
         private void OnItemCollectionChanged(object sender, EventArgs e)
         {
-            this.verticalScrollBar.Maximum = this.Items.Count - GetNumItemsVisible();
-            this.verticalScrollBar.Visible = this.Items.Count > GetNumItemsVisible();
+            int n = GetNumItemsVisible();
+            int max = this.Items.Count - n;
+            if (max < 0)
+            {
+                max = 0;
+            }
+
+            this.verticalScrollBar.Maximum = max - 1;
+            this.verticalScrollBar.Visible = this.Items.Count > n;
 
             Invalidate();
         }
@@ -410,7 +430,7 @@ namespace Kirilium.Controls.Elements
                 int newIndex = this.SelectedIndex + 1;
                 if (newIndex >= this.Items.Count)
                 {
-                    newIndex = 0;
+                    newIndex = this.Items.Count - 1;
                 }
 
                 this.SelectedIndex = newIndex;

@@ -15,8 +15,8 @@ namespace Kirilium.Controls
         private readonly KDetailsListItemRenderer itemRenderer;
 
         // イベント
-        public new event EventHandler Click;
-        public new event EventHandler DoubleClick;
+        //public new event EventHandler Click;
+        //public new event EventHandler DoubleClick;
         public event EventHandler SelectedIndexChanged;
 
         // コンストラクタ
@@ -65,7 +65,6 @@ namespace Kirilium.Controls
             set
             {
                 this.itemRenderer.SelectedIndex = value;
-                this.SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
             }
             get
             {
@@ -130,7 +129,7 @@ namespace Kirilium.Controls
         /// <param name="e"></param>
         private void OnClick(object sender, EventArgs e)
         {
-            this.Click?.Invoke(sender, e);
+            base.OnClick(e);
         }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace Kirilium.Controls
         /// <param name="e"></param>
         private void OnDoubleClick(object sender, EventArgs e)
         {
-            this.DoubleClick?.Invoke(sender, e);
+            base.OnDoubleClick(e);
         }
 
         /// <summary>

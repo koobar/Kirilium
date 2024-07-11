@@ -108,7 +108,7 @@ namespace Kirilium.Controls.Elements
                 Invalidate();
 
                 // イベントを実行する。
-                this.SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+                OnSelectedIndexChanged();
             }
             get
             {
@@ -372,6 +372,14 @@ namespace Kirilium.Controls.Elements
             this.verticalScrollBar.Value = index;
 
             base.OnMouseWheel(e);
+        }
+
+        /// <summary>
+        /// 選択されたアイテムのインデックスが変更された場合の処理
+        /// </summary>
+        protected virtual void OnSelectedIndexChanged()
+        {
+            this.SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

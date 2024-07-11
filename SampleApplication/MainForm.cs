@@ -13,13 +13,6 @@ namespace SampleApplication
             InitializeComponent();
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            //ThemeManager.CurrentTheme.Apply(this);
-            
-            base.OnHandleCreated(e);
-        }
-
         /// <summary>
         /// Create KListView.
         /// </summary>

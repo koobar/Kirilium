@@ -7,6 +7,7 @@ namespace Kirilium.Controls
         // 非公開フィールド
         private readonly KDetailsListColumnHeaderRenderer parent;
         private string text;
+        private int width;
 
         // コンストラクタ
         public KColumnHeader(KDetailsList parent)
@@ -27,11 +28,32 @@ namespace Kirilium.Controls
             set
             {
                 this.text = value;
-                OnTextChanged();
+                Invalidate();
             }
             get
             {
                 return this.text;
+            }
+        }
+
+        /// <summary>
+        /// 幅
+        /// </summary>
+        public int Width
+        {
+            set
+            {
+                bool flag = this.width != value;
+                this.width = value;
+
+                if (flag)
+                {
+                    Invalidate();
+                }
+            }
+            get
+            {
+                return this.width;
             }
         }
 
@@ -56,11 +78,16 @@ namespace Kirilium.Controls
         public int ActualHeight { internal set; get; }
 
         /// <summary>
-        /// テキストが変更された場合の処理
+        /// 再描画
         /// </summary>
-        protected virtual void OnTextChanged()
+        protected virtual void Invalidate()
         {
-            this.parent.Refresh();
+            if (this.parent == null)
+            {
+                return;
+            }
+
+            this.parent.Invalidate();
         }
     }
 }

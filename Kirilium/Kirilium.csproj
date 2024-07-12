@@ -48,9 +48,6 @@
     <Compile Include="Controls\Elements\KDetailsListColumnHeaderRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\KDetailsListItemControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\Elements\KDetailsListItemRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>

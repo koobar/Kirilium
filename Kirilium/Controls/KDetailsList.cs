@@ -15,8 +15,6 @@ namespace Kirilium.Controls
         private readonly KDetailsListItemRenderer itemRenderer;
 
         // イベント
-        //public new event EventHandler Click;
-        //public new event EventHandler DoubleClick;
         public event EventHandler SelectedIndexChanged;
 
         // コンストラクタ

@@ -2,6 +2,7 @@
 using Kirilium.Themes;
 using System.Windows.Forms;
 using System;
+using System.Drawing;
 
 namespace Kirilium.Controls.Elements
 {
@@ -24,6 +25,12 @@ namespace Kirilium.Controls.Elements
             ThemeManager.ThemeChanged += OnThemeChanged;
         }
 
+        // デストラクタ
+        ~KDetailsListColumnHeaderRenderer()
+        {
+            ThemeManager.ThemeChanged -= OnThemeChanged;
+        }
+
         /// <summary>
         /// 列ヘッダの一覧を示す。
         /// </summary>
@@ -33,6 +40,41 @@ namespace Kirilium.Controls.Elements
             {
                 return this.columnHeaders;
             }
+        }
+
+        /// <summary>
+        /// 指定されたインデックスの列ヘッダの領域を取得する。
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected virtual Rectangle GetColumnBounds(int index)
+        {
+            int x = 1;
+            for (int i = 0; i < this.columnHeaders.Count; ++i)
+            {
+                var text = this.columnHeaders[i].Text;
+                
+                // 列ヘッダの幅を取得
+                var width = this.columnHeaders[i].Width;
+                if (width <= 0)
+                {
+                    width = Renderer.MeasureText(text, this.Font).Width;
+                }
+
+                var size = new Size(width, this.Height);   
+                var bounds = new Rectangle(x, 0, size.Width, this.Height);
+
+                if (i == index)
+                {
+                    return bounds;
+                }
+
+                // 後始末
+                x += bounds.Width;
+                x += KDetailsList.ELEMENTS_MARGIN;
+            }
+
+            return Rectangle.Empty;
         }
 
         /// <summary>
@@ -64,15 +106,14 @@ namespace Kirilium.Controls.Elements
             // 背景を塗りつぶす。
             Renderer.FillRect(e.Graphics, this.DisplayRectangle, ThemeManager.CurrentTheme.GetColor(ColorKeys.KDetailsListBackColor));
 
-            int x = 1;
             for (int i = 0; i < this.columnHeaders.Count; ++i)
             {
                 var text = this.columnHeaders[i].Text;
-                var size = Renderer.MeasureText(text, this.Font);
+                var bounds = GetColumnBounds(i);
 
                 if (i > 0)
                 {
-                    Renderer.DrawLine(e.Graphics, x, 0, x, this.Height, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
+                    Renderer.DrawLine(e.Graphics, bounds.X, bounds.Y, bounds.X, bounds.Height, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
                 }
 
                 // テキストを描画
@@ -80,21 +121,16 @@ namespace Kirilium.Controls.Elements
                     e.Graphics,
                     text,
                     this.Font,
-                    x,
-                    0,
-                    size.Width,
-                    this.Height,
+                    bounds,
                     ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
                     ThemeManager.CurrentTheme.GetColor(ColorKeys.KDetailsListBackColor),
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
 
                 // 後始末
-                this.columnHeaders[i].ActualLeft = x;
-                this.columnHeaders[i].ActualTop = 0;
-                this.columnHeaders[i].ActualWidth = size.Width;
-                this.columnHeaders[i].ActualHeight = this.Height;
-                x += size.Width;
-                x += KDetailsList.ELEMENTS_MARGIN;
+                this.columnHeaders[i].ActualLeft = bounds.X;
+                this.columnHeaders[i].ActualTop = bounds.Y;
+                this.columnHeaders[i].ActualWidth = bounds.Width;
+                this.columnHeaders[i].ActualHeight = bounds.Height;
             }
 
             // 境界線の描画

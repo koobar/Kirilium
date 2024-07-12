@@ -192,15 +192,13 @@ namespace Kirilium.Controls.Elements
             for (int columnIndex = 0; columnIndex < this.columnHeaderRenderer.ColumnHeaders.Count; ++columnIndex)
             {
                 var columnHeader = this.columnHeaderRenderer.ColumnHeaders[columnIndex];
-                var headerText = columnHeader.Text;
-                var headerSize = Renderer.MeasureText(headerText, this.Font);
-                var rect = new Rectangle(x, bounds.Y, headerSize.Width, this.ItemHeight);
+                var rect = new Rectangle(x, bounds.Y, columnHeader.ActualWidth, this.ItemHeight);
 
                 // サブアイテムを描画する。
                 PaintSubItem(deviceContext, this.Items[index].SubItems[columnIndex], rect, this.Items[index].IsSelected);
 
                 // 後始末
-                x += headerSize.Width;
+                x += columnHeader.ActualWidth;
                 x += KDetailsList.ELEMENTS_MARGIN;
             }
         }

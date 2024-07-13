@@ -286,11 +286,29 @@ namespace Kirilium
             Renderer.FillRect(renderer, 0, 0, width, height, backColor);
 
             // バツ印の描画
-            renderer.SmoothingMode = SmoothingMode.AntiAlias;
-            Renderer.DrawLine(renderer, 3, 3, width - 3, height - 3, foreColor);
-            Renderer.DrawLine(renderer, width - 3, 3, 3, height - 3, foreColor);
+            var img = new Bitmap(width, height);
+            var g = Graphics.FromImage(img);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var pen = new Pen(foreColor, 1))
+            {
+                g.DrawLine(pen, 3, 3, img.Width - 3, img.Height - 3);
+                g.DrawLine(pen, 3, img.Height - 3, img.Width - 3, 3);
+            }
 
+            // バツ印のイメージを中央に描画する。
+            Renderer.DrawImageUnscaled(
+                renderer,
+                (result.Width / 2) - (img.Width / 2),
+                (result.Height / 2) - (img.Height / 2) - 1,
+                img.Width,
+                img.Height,
+                img);
+
+            // 後始末
             renderer.Dispose();
+            g.Dispose();
+            img.Dispose();
+
             return result;
         }
 

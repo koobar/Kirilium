@@ -84,11 +84,13 @@ namespace SampleApplication
         {
             this.kTextBox1.Text = "Hello Kirilium!";
 
+            this.kTabControl1.IsClosable = true;
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - LargeIcon", CreateListView(View.LargeIcon)));
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - SmallIcon", CreateListView(View.SmallIcon)));
             this.kTabControl1.TabPages.Add(new KTabPage("KListView - List", CreateListView(View.List)));
             this.kTabControl1.TabPages.Add(new KTabPage("KDetailsList", CreateKDetailsList()));
 
+            
             base.OnLoad(e);
         }
 

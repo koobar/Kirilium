@@ -149,7 +149,6 @@ namespace Kirilium.Controls.Elements
         /// 指定されたタブヘッダの領域のうち、閉じるボタンが描画される領域を示す矩形を取得する。
         /// </summary>
         /// <param name="tabRect"></param>
-        /// <param name="tabIcon"></param>
         /// <param name="drawCloseButton"></param>
         /// <returns></returns>
         private Rectangle GetCloseButtonRect(Rectangle tabRect, bool drawCloseButton)
@@ -161,9 +160,9 @@ namespace Kirilium.Controls.Elements
 
             return new Rectangle(
                 tabRect.Right - (CLOSE_BUTTON_SIZE + PADDING),
-                (tabRect.Height / 2) - (CLOSE_BUTTON_SIZE / 2) + (PADDING / 2),
+                (tabRect.Height / 2) - (CLOSE_BUTTON_SIZE / 2) + PADDING, //(tabRect.Height / 2) - (CLOSE_BUTTON_SIZE / 2) + (PADDING / 2),
                 CLOSE_BUTTON_SIZE, 
-                tabRect.Height);
+                tabRect.Height - PADDING);
         }
 
         /// <summary>
@@ -222,11 +221,7 @@ namespace Kirilium.Controls.Elements
             {
                 var tabRect = GetTabRect(i);
                 this.tabHeaders[i].IsHot = tabRect.Contains(PointToClient(Cursor.Position));
-
-                if (this.tabHeaders[i].DrawCloseButton)
-                {
-                    this.tabHeaders[i].IsCloseButtonHot = GetCloseButtonRect(tabRect, true).Contains(PointToClient(Cursor.Position));
-                }
+                this.tabHeaders[i].IsCloseButtonHot = this.tabHeaders[i].DrawCloseButton && GetCloseButtonRect(tabRect, true).Contains(PointToClient(Cursor.Position));
             }
 
             Invalidate();

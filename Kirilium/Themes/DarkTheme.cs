@@ -103,7 +103,7 @@ namespace Kirilium.Themes
             SetColor(ColorKeys.TabControlHeaderBackColorNormal, windowBackColor);
             SetColor(ColorKeys.TabControlHeaderBackColorHot, Color.FromArgb(28, 151, 234));
             SetColor(ColorKeys.TabControlHeaderBackColorSelected, highlight);
-            SetColor(ColorKeys.TabControlHeaderCloseButtonBackColorHot, Color.FromArgb(28, 151, 234));
+            SetColor(ColorKeys.TabControlHeaderCloseButtonBackColorHot, Color.FromArgb(200, 32, 32));
             SetColor(ColorKeys.TabControlContentAreaBackColor, controlBackColorNormal);
 
             // グループボックスの配色

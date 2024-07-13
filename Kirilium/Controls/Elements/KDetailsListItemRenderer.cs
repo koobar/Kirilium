@@ -56,6 +56,8 @@ namespace Kirilium.Controls.Elements
             set
             {
                 this.itemHeight = value;
+
+                UpdateVerticalScrollBarVisible();
                 Invalidate();
             }
             get
@@ -126,13 +128,26 @@ namespace Kirilium.Controls.Elements
 
         #endregion
 
+        private void UpdateVerticalScrollBarVisible()
+        {
+            int n = GetNumItemsVisible();
+            int max = this.Items.Count - n;
+            if (max < 0)
+            {
+                max = 0;
+            }
+
+            this.verticalScrollBar.Maximum = max - 1;
+            this.verticalScrollBar.Visible = this.Items.Count > n;
+        }
+
         /// <summary>
         /// コントロールの領域内に表示可能なアイテムの個数を取得する。
         /// </summary>
         /// <returns></returns>
         protected virtual int GetNumItemsVisible()
         {
-            return (int)Math.Round(this.ClientRectangle.Height / (double)this.ItemHeight, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(this.DisplayRectangle.Height / (double)this.ItemHeight, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
@@ -381,22 +396,35 @@ namespace Kirilium.Controls.Elements
         }
 
         /// <summary>
+        /// クライアント領域のサイズが変更された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            UpdateVerticalScrollBarVisible();
+
+            base.OnClientSizeChanged(e);
+        }
+
+        /// <summary>
+        /// サイズが変更された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            UpdateVerticalScrollBarVisible();
+
+            base.OnSizeChanged(e);
+        }
+
+        /// <summary>
         /// アイテムのコレクションが変更された場合の処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnItemCollectionChanged(object sender, EventArgs e)
         {
-            int n = GetNumItemsVisible();
-            int max = this.Items.Count - n;
-            if (max < 0)
-            {
-                max = 0;
-            }
-
-            this.verticalScrollBar.Maximum = max - 1;
-            this.verticalScrollBar.Visible = this.Items.Count > n;
-
+            UpdateVerticalScrollBarVisible();
             Invalidate();
         }
 

@@ -54,6 +54,21 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
+        /// アイテムの高さ
+        /// </summary>
+        public int ItemHeight
+        {
+            set
+            {
+                this.itemRenderer.ItemHeight = value;
+            }
+            get
+            {
+                return this.itemRenderer.Height;
+            }
+        }
+
+        /// <summary>
         /// 選択されたアイテムのインデックスを示す。
         /// </summary>
         public int SelectedIndex

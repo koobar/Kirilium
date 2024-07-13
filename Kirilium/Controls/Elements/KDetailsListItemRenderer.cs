@@ -128,6 +128,9 @@ namespace Kirilium.Controls.Elements
 
         #endregion
 
+        /// <summary>
+        /// 縦スクロールバーの表示・非表示を更新する。
+        /// </summary>
         private void UpdateVerticalScrollBarVisible()
         {
             int n = GetNumItemsVisible();

@@ -64,6 +64,10 @@ namespace Kirilium.Controls.Elements
                 {
                     width = this.columnHeaders[i].MaxWidth;
                 }
+                if (this.columnHeaders[i].MinWidth < 0 && width < this.columnHeaders[i].MinWidth)
+                {
+                    width = this.columnHeaders[i].MinWidth;
+                }
                 var size = new Size(width, this.Height);   
                 var bounds = new Rectangle(x, 0, size.Width, this.Height);
 

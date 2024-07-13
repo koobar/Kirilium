@@ -9,6 +9,7 @@ namespace Kirilium.Controls
         private string text;
         private int width;
         private int maxWidth;
+        private int minWidth;
 
         // コンストラクタ
         public KColumnHeader(KDetailsList parent)
@@ -76,6 +77,27 @@ namespace Kirilium.Controls
             get
             {
                 return this.maxWidth;
+            }
+        }
+
+        /// <summary>
+        /// 幅の最小値
+        /// </summary>
+        public int MinWidth
+        {
+            set
+            {
+                bool flag = this.minWidth != value;
+                this.minWidth = value;
+
+                if (flag)
+                {
+                    Invalidate();
+                }
+            }
+            get
+            {
+                return this.minWidth;
             }
         }
 

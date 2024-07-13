@@ -1,4 +1,5 @@
 ﻿using Kirilium.Controls.Elements;
+using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
@@ -7,20 +8,30 @@ namespace Kirilium.Controls
         // 非公開フィールド
         private readonly KDetailsListColumnHeaderRenderer parent;
         private string text;
+        private TextFormatFlags headerTextFormatFlags;
+        private TextFormatFlags contentTextFormatFlags;
         private int width;
         private int maxWidth;
         private int minWidth;
 
-        // コンストラクタ
+        #region コンストラクタ
+
         public KColumnHeader(KDetailsList parent)
         {
             if (parent != null)
             {
                 this.parent = parent.ColumnHeaderRenderer;
             }
+
+            this.headerTextFormatFlags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+            this.contentTextFormatFlags = TextFormatFlags.Default | TextFormatFlags.VerticalCenter;
         }
 
         public KColumnHeader() : this(null) { }
+
+        #endregion
+
+        #region プロパティ
 
         /// <summary>
         /// テキスト
@@ -35,6 +46,48 @@ namespace Kirilium.Controls
             get
             {
                 return this.text;
+            }
+        }
+
+        /// <summary>
+        /// 列ヘッダのテキストの表示情報およびレイアウト情報を示す。
+        /// </summary>
+        public TextFormatFlags HeaderTextFormatFlags
+        {
+            set
+            {
+                bool flag = this.headerTextFormatFlags != value;
+                this.headerTextFormatFlags = value;
+
+                if (flag)
+                {
+                    Invalidate();
+                }
+            }
+            get
+            {
+                return this.headerTextFormatFlags;
+            }
+        }
+
+        /// <summary>
+        /// 列のコンテンツのテキストの表示情報およびレイアウト情報を示す。
+        /// </summary>
+        public TextFormatFlags ContentTextFormatFlags
+        {
+            set
+            {
+                bool flag = this.contentTextFormatFlags != value;
+                this.contentTextFormatFlags = value;
+
+                if (flag)
+                {
+                    Invalidate();
+                }
+            }
+            get
+            {
+                return this.contentTextFormatFlags;
             }
         }
 
@@ -120,6 +173,8 @@ namespace Kirilium.Controls
         /// 実際に描画されている高さ
         /// </summary>
         public int ActualHeight { internal set; get; }
+
+        #endregion
 
         /// <summary>
         /// 再描画

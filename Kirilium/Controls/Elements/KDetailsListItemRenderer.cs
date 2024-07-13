@@ -222,7 +222,14 @@ namespace Kirilium.Controls.Elements
             }
 
             // テキストを描画する。
-            Renderer.DrawText(deviceContext, text, this.Font, bounds, textColor, Color.Transparent, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            Renderer.DrawText(
+                deviceContext, 
+                text, 
+                this.Font, 
+                bounds, 
+                textColor, 
+                Color.Transparent, 
+                this.columnHeaderRenderer.ColumnHeaders[columnIndex].ContentTextFormatFlags);
 
             // 垂直方向のグリッド線の描画が有効なら描画する。
             if (this.drawVerticalGridLines && columnIndex > 0)

@@ -131,7 +131,7 @@ namespace Kirilium.Controls.Elements
                     bounds,
                     ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
                     ThemeManager.CurrentTheme.GetColor(ColorKeys.KDetailsListBackColor),
-                    TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+                    this.columnHeaders[i].HeaderTextFormatFlags);
 
                 // 後始末
                 this.columnHeaders[i].ActualLeft = bounds.X;

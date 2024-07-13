@@ -357,6 +357,11 @@ namespace Kirilium.Controls.Elements
         /// <param name="e"></param>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (!this.verticalScrollBar.Visible)
+            {
+                return;
+            }
+
             int n = GetNumItemsVisible();
             int index = 0;
 

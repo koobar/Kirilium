@@ -20,8 +20,6 @@ namespace Kirilium.Controls
         // コンストラクタ
         public KDetailsList()
         {
-            InitializeComponent();
-
             this.Padding = new Padding(0);
             this.columnHeaderRenderer = new KDetailsListColumnHeaderRenderer();
             this.columnHeaderRenderer.Dock = DockStyle.Top;
@@ -69,7 +67,7 @@ namespace Kirilium.Controls
                 return this.itemRenderer.SelectedIndex;
             }
         }
-        
+
         /// <summary>
         /// 列ヘッダの一覧を示す。
         /// </summary>

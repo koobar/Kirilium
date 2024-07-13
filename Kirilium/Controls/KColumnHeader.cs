@@ -8,6 +8,7 @@ namespace Kirilium.Controls
         private readonly KDetailsListColumnHeaderRenderer parent;
         private string text;
         private int width;
+        private int maxWidth;
 
         // コンストラクタ
         public KColumnHeader(KDetailsList parent)
@@ -54,6 +55,27 @@ namespace Kirilium.Controls
             get
             {
                 return this.width;
+            }
+        }
+
+        /// <summary>
+        /// 幅の最大値
+        /// </summary>
+        public int MaxWidth
+        {
+            set
+            {
+                bool flag = this.maxWidth != value;
+                this.maxWidth = value;
+
+                if (flag)
+                {
+                    Invalidate();
+                }
+            }
+            get
+            {
+                return this.maxWidth;
             }
         }
 

@@ -61,7 +61,6 @@ namespace SampleApplication
             result.Columns.Add(new KColumnHeader(result));
             result.Columns[0].Text = "Column 1";
             result.Columns[1].Text = "Column 2";
-            result.Columns[0].Width = 300;
 
             var contextMenu = new KContextMenuStrip();
             contextMenu.Items.Add(new KToolStripMenuItem() { Text = "Undo(&U)", ShortcutKeys = Keys.Control | Keys.Z });
@@ -75,6 +74,8 @@ namespace SampleApplication
 
                 result.Items.Add(item);
             }
+
+            result.AutoResizeColumns(KColumnHeaderAutoResizeStyle.ColumnContent);
 
             return result;
         }

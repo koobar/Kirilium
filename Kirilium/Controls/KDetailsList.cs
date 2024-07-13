@@ -121,6 +121,61 @@ namespace Kirilium.Controls
         #endregion
 
         /// <summary>
+        /// 列の幅をコンテンツに合わせてリサイズする。
+        /// </summary>
+        private void AutoResizeColumnsByColumnContent()
+        {
+            for (int columnIndex = 0; columnIndex < this.Columns.Count; ++columnIndex)
+            {
+                int maxWidth = Renderer.MeasureText(this.Columns[columnIndex].Text, this.Font).Width;
+
+                for (int i = 0; i < this.Items.Count; ++i)
+                {
+                    var item = this.Items[i];
+                    var caption = item.SubItems[columnIndex];
+                    var size = Renderer.MeasureText(caption, this.Font);
+
+                    if (maxWidth < size.Width)
+                    {
+                        maxWidth = size.Width;
+                    }
+                }
+
+                this.Columns[columnIndex].Width = maxWidth;
+            }
+        }
+
+        /// <summary>
+        /// 列の幅を列ヘッダのコンテンツに合わせてリサイズする。
+        /// </summary>
+        private void AutoResizeColumnsByHeaderSize()
+        {
+            for (int i = 0; i < this.Columns.Count; ++i)
+            {
+                var column = this.Columns[i];
+                var size = Renderer.MeasureText(column.Text, this.Font);
+
+                this.Columns[i].Width = size.Width;
+            }
+        }
+
+        /// <summary>
+        /// 指定されたサイズ変更のスタイルで、列の幅を自動リサイズする。
+        /// </summary>
+        /// <param name="autoResizeStyle"></param>
+        public void AutoResizeColumns(KColumnHeaderAutoResizeStyle autoResizeStyle)
+        {
+            if (autoResizeStyle == KColumnHeaderAutoResizeStyle.ColumnContent)
+            {
+                AutoResizeColumnsByColumnContent();
+            }
+            else if (autoResizeStyle == KColumnHeaderAutoResizeStyle.HeaderContent)
+            {
+                AutoResizeColumnsByHeaderSize();
+            }
+        }
+
+        /// <summary>
         /// クリックされた場合の処理
         /// </summary>
         /// <param name="sender"></param>

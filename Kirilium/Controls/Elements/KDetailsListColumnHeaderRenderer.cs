@@ -60,7 +60,10 @@ namespace Kirilium.Controls.Elements
                 {
                     width = Renderer.MeasureText(text, this.Font).Width;
                 }
-
+                if (this.columnHeaders[i].MaxWidth < 0 && width > this.columnHeaders[i].MaxWidth)
+                {
+                    width = this.columnHeaders[i].MaxWidth;
+                }
                 var size = new Size(width, this.Height);   
                 var bounds = new Rectangle(x, 0, size.Width, this.Height);
 

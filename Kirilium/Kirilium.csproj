@@ -52,6 +52,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\KColumnHeader.cs" />
+    <Compile Include="Controls\KColumnHeaderAutoResizeStyle.cs" />
     <Compile Include="Controls\KDetailsList.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -94,7 +94,7 @@ namespace Kirilium.Controls
         /// <returns></returns>
         protected virtual Color GetItemBackColor(DrawItemState state)
         {
-            if (state == DrawItemState.Selected)
+            if (state.HasFlag(DrawItemState.Selected))
             {
                 return ThemeManager.CurrentTheme.GetColor(ColorKeys.ComboBoxItemBackColorSelected);
             }

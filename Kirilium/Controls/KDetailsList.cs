@@ -69,6 +69,36 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
+        /// 水平方向のグリッド線を描画するかどうかを示す。
+        /// </summary>
+        public bool DrawHorizontalGridLines
+        {
+            set
+            {
+                this.itemRenderer.DrawHorizontalGridLines = value;
+            }
+            get
+            {
+                return this.itemRenderer.DrawHorizontalGridLines;
+            }
+        }
+
+        /// <summary>
+        /// 垂直方向のグリッド線を描画するかどうかを示す。
+        /// </summary>
+        public bool DrawVerticalGridLines
+        {
+            set
+            {
+                this.itemRenderer.DrawVerticalGridLines = value;
+            }
+            get
+            {
+                return this.itemRenderer.DrawVerticalGridLines;
+            }
+        }
+
+        /// <summary>
         /// 選択されたアイテムのインデックスを示す。
         /// </summary>
         public int SelectedIndex

@@ -13,7 +13,9 @@ namespace Kirilium.Controls.Elements
         private readonly NotificationList<KDetailsListItem> items;
         private readonly VScrollBar verticalScrollBar;
         private int visibleFirstItemIndex;
-        private int itemHeight; 
+        private int itemHeight;
+        private bool drawVerticalGridLines;
+        private bool drawHorizontalGridLines;
         private int scrollSpeed;
 
         // イベント
@@ -63,6 +65,40 @@ namespace Kirilium.Controls.Elements
             get
             {
                 return this.itemHeight;
+            }
+        }
+
+        /// <summary>
+        /// 垂直方向のグリッド線を描画するかどうか
+        /// </summary>
+        public bool DrawVerticalGridLines
+        {
+            set
+            {
+                this.drawVerticalGridLines = value;
+
+                Invalidate();
+            }
+            get
+            {
+                return this.drawVerticalGridLines;
+            }
+        }
+
+        /// <summary>
+        /// 水平方向のグリッド線を描画するかどうか
+        /// </summary>
+        public bool DrawHorizontalGridLines
+        {
+            set
+            {
+                this.drawHorizontalGridLines = value;
+
+                Invalidate();
+            }
+            get
+            {
+                return this.drawHorizontalGridLines;
             }
         }
 
@@ -177,7 +213,7 @@ namespace Kirilium.Controls.Elements
         /// <param name="text"></param>
         /// <param name="bounds"></param>
         /// <param name="isSelected"></param>
-        protected virtual void PaintSubItem(Graphics deviceContext, string text, Rectangle bounds, bool isSelected)
+        protected virtual void PaintSubItem(Graphics deviceContext, string text, Rectangle bounds, bool isSelected, int columnIndex)
         {
             var textColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
             if (isSelected)
@@ -185,7 +221,14 @@ namespace Kirilium.Controls.Elements
                 textColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextHighlight);
             }
 
+            // テキストを描画する。
             Renderer.DrawText(deviceContext, text, this.Font, bounds, textColor, Color.Transparent, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+
+            // 垂直方向のグリッド線の描画が有効なら描画する。
+            if (this.drawVerticalGridLines && columnIndex > 0)
+            {
+                Renderer.DrawLine(deviceContext, bounds.X, bounds.Y, bounds.X, bounds.Bottom, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
+            }
         }
 
         /// <summary>
@@ -213,11 +256,17 @@ namespace Kirilium.Controls.Elements
                 var rect = new Rectangle(x, bounds.Y, columnHeader.ActualWidth, this.ItemHeight);
 
                 // サブアイテムを描画する。
-                PaintSubItem(deviceContext, this.Items[index].SubItems[columnIndex], rect, this.Items[index].IsSelected);
+                PaintSubItem(deviceContext, this.Items[index].SubItems[columnIndex], rect, this.Items[index].IsSelected, columnIndex);
 
                 // 後始末
                 x += columnHeader.ActualWidth;
                 x += KDetailsList.ELEMENTS_MARGIN;
+            }
+
+            // 水平方向のグリッド線の描画が有効なら描画する。
+            if (this.drawHorizontalGridLines)
+            {
+                Renderer.DrawLine(deviceContext, bounds.X, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1, ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderNormal));
             }
         }
 

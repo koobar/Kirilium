@@ -140,7 +140,7 @@ namespace Kirilium.Controls.Elements
                 max = 0;
             }
 
-            this.verticalScrollBar.Maximum = max - 1;
+            this.verticalScrollBar.Maximum = max;
             this.verticalScrollBar.Visible = this.Items.Count > n;
         }
 
@@ -378,9 +378,9 @@ namespace Kirilium.Controls.Elements
                 index = 0;
             }
 
-            if (index < 0)
+            if (index > this.verticalScrollBar.Maximum)
             {
-                index = 0;
+                index = this.verticalScrollBar.Maximum;
             }
 
             // 縦スクロールバーの値を反映

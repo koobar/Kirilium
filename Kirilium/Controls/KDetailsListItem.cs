@@ -39,5 +39,10 @@ namespace Kirilium.Controls
                 return this.isSelected;
             }
         }
+
+        /// <summary>
+        /// タグ
+        /// </summary>
+        public object Tag { set; get; }
     }
 }

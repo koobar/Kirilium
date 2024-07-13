@@ -147,10 +147,11 @@ namespace Kirilium.Controls
                     var item = this.Items[i];
                     var caption = item.SubItems[columnIndex];
                     var size = Renderer.MeasureText(caption, this.Font);
+                    int width = size.Width + ELEMENTS_MARGIN;
 
-                    if (maxWidth < size.Width)
+                    if (maxWidth < width)
                     {
-                        maxWidth = size.Width;
+                        maxWidth = width;
                     }
                 }
 
@@ -167,8 +168,18 @@ namespace Kirilium.Controls
             {
                 var column = this.Columns[i];
                 var size = Renderer.MeasureText(column.Text, this.Font);
+                int width = size.Width + ELEMENTS_MARGIN;
 
-                this.Columns[i].Width = size.Width;
+                if (width > column.MaxWidth)
+                {
+                    width = column.MaxWidth;
+                }
+                if (width < column.MinWidth)
+                {
+                    width = column.MinWidth;
+                }
+
+                this.Columns[i].Width = width;
             }
         }
 

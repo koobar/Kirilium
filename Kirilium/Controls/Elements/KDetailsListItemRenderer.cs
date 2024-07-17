@@ -176,7 +176,7 @@ namespace Kirilium.Controls.Elements
                 max = 0;
             }
 
-            this.verticalScrollBar.Maximum = max;
+            this.verticalScrollBar.Maximum = max + this.ScrollSpeed;
             this.verticalScrollBar.Visible = this.Items.Count > n;
         }
 
@@ -430,7 +430,7 @@ namespace Kirilium.Controls.Elements
                 index = this.visibleFirstItemIndex + this.ScrollSpeed;
             }
 
-            if (index >= this.Items.Count - n )
+            if (index >= this.Items.Count - n)
             {
                 index = this.Items.Count - n;
             }

@@ -52,19 +52,17 @@ namespace Kirilium.Controls.Elements
             int x = 1;
             for (int i = 0; i < this.columnHeaders.Count; ++i)
             {
-                var text = this.columnHeaders[i].Text;
-                
                 // 列ヘッダの幅を取得
                 var width = this.columnHeaders[i].Width;
                 if (width <= 0)
                 {
-                    width = Renderer.MeasureText(text, this.Font).Width;
+                    width = Renderer.MeasureText(this.columnHeaders[i].Text, this.Font).Width;
                 }
-                if (this.columnHeaders[i].MaxWidth < 0 && width > this.columnHeaders[i].MaxWidth)
+                if (this.columnHeaders[i].MaxWidth > 0 && width > this.columnHeaders[i].MaxWidth)
                 {
                     width = this.columnHeaders[i].MaxWidth;
                 }
-                if (this.columnHeaders[i].MinWidth < 0 && width < this.columnHeaders[i].MinWidth)
+                if (this.columnHeaders[i].MinWidth > 0 && width < this.columnHeaders[i].MinWidth)
                 {
                     width = this.columnHeaders[i].MinWidth;
                 }
@@ -101,6 +99,14 @@ namespace Kirilium.Controls.Elements
         /// <param name="e"></param>
         private void OnColumnHeaderCollectionChanged(object sender, EventArgs e)
         {
+            foreach (var columnHeader in this.columnHeaders)
+            {
+                if (columnHeader.Parent == null)
+                {
+                    columnHeader.Parent = this;
+                }
+            }
+
             Invalidate();
         }
 

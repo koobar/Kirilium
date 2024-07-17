@@ -6,7 +6,7 @@ namespace Kirilium.Controls
     public class KColumnHeader
     {
         // 非公開フィールド
-        private readonly KDetailsListColumnHeaderRenderer parent;
+        private KDetailsListColumnHeaderRenderer parent;
         private string text;
         private TextFormatFlags headerTextFormatFlags;
         private TextFormatFlags contentTextFormatFlags;
@@ -46,6 +46,21 @@ namespace Kirilium.Controls
             get
             {
                 return this.text;
+            }
+        }
+
+        /// <summary>
+        /// 親コントロール
+        /// </summary>
+        internal KDetailsListColumnHeaderRenderer Parent
+        {
+            set
+            {
+                this.parent = value;
+            }
+            get
+            {
+                return this.parent;
             }
         }
 

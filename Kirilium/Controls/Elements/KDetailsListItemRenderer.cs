@@ -373,7 +373,7 @@ namespace Kirilium.Controls.Elements
         /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
                 // 表示領域分の各アイテムの領域を取得する。
                 var n = GetNumItemsVisible();

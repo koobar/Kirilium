@@ -42,43 +42,6 @@ namespace Kirilium.Dialogs
         }
 
         /// <summary>
-        /// 指定されたテキストの行数を取得する。
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private static int GetLineCount(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                return 0;
-            }
-
-            // 改行コードをLFで統一
-            text = text.Replace("\r\n", "\n");
-            text = text.Replace("\r", "\n");
-
-            // 行数の取得
-            int cnt = 1;
-            int pos = 0;
-            while (true)
-            {
-                int idx = text.IndexOf("\n", pos);
-
-                if (idx != -1)
-                {
-                    pos = idx + 1;
-                    cnt++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return cnt;
-        }
-
-        /// <summary>
         /// 指定された種類に対応するシステムアイコンを取得する。
         /// </summary>
         /// <param name="icon"></param>
@@ -159,10 +122,13 @@ namespace Kirilium.Dialogs
         /// <returns></returns>
         internal static KWindow CreateMessageBoxWindow(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
+            var bmp = new Bitmap(1, 1);
+            var g = Graphics.FromImage(bmp);
+
             var dialog = new KWindow();
             dialog.Padding = new Padding(5);
             dialog.Text = title;
-            dialog.Size = new Size(300, Math.Max((dialog.Font.Height + 2) * GetLineCount(message), 130));
+            dialog.Size = new Size(300, (int)g.MeasureString(message, dialog.Font).Height + 130);
             dialog.StartPosition = FormStartPosition.CenterScreen;
             dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
             dialog.MaximizeBox = false;
@@ -196,7 +162,7 @@ namespace Kirilium.Dialogs
             iconBox.Size = new Size(48, 48);
             iconBox.Dock = DockStyle.Left;
             iconBox.Parent = mainContent;
-            iconBox.Padding = new Padding(5) ;
+            iconBox.Padding = new Padding(5);
 
             var bottomPanel = new FlowLayoutPanel();
             bottomPanel.Parent = dialog;
@@ -255,6 +221,10 @@ namespace Kirilium.Dialogs
                     break;
             }
 
+            // 後始末
+            g.Dispose();
+            bmp.Dispose();
+
             return dialog;
         }
 
@@ -291,7 +261,11 @@ namespace Kirilium.Dialogs
         /// <returns></returns>
         public static DialogResult Show(string message)
         {
-            return CreateMessageBoxWindow(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.None).ShowDialog();
+            var dialog = CreateMessageBoxWindow(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.None);
+            var result = dialog.ShowDialog();
+
+            dialog.Dispose();
+            return result;
         }
 
         /// <summary>
@@ -302,7 +276,11 @@ namespace Kirilium.Dialogs
         /// <returns></returns>
         public static DialogResult Show(string message, string title)
         {
-            return CreateMessageBoxWindow(message, title, MessageBoxButtons.OK, MessageBoxIcon.None).ShowDialog();
+            var dialog = CreateMessageBoxWindow(message, title, MessageBoxButtons.OK, MessageBoxIcon.None);
+            var result = dialog.ShowDialog();
+
+            dialog.Dispose();
+            return result;
         }
 
         /// <summary>
@@ -314,7 +292,11 @@ namespace Kirilium.Dialogs
         /// <returns></returns>
         public static DialogResult Show(string message, string title, MessageBoxButtons buttons)
         {
-            return CreateMessageBoxWindow(message, title, buttons, MessageBoxIcon.None).ShowDialog();
+            var dialog = CreateMessageBoxWindow(message, title, buttons, MessageBoxIcon.None);
+            var result = dialog.ShowDialog();
+
+            dialog.Dispose();
+            return result;
         }
 
         /// <summary>
@@ -327,7 +309,11 @@ namespace Kirilium.Dialogs
         /// <returns></returns>
         public static DialogResult Show(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return CreateMessageBoxWindow(message, title, buttons, icon).ShowDialog();
+            var dialog = CreateMessageBoxWindow(message, title, buttons, icon);
+            var result = dialog.ShowDialog();
+
+            dialog.Dispose();
+            return result;
         }
     }
 }

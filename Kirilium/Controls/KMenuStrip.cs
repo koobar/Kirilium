@@ -2,10 +2,12 @@
 using Kirilium.Themes;
 using System;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KMenuStrip : MenuStrip
     {
         // コンストラクタ

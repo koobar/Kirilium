@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Media;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Dialogs
 {
+    [SupportedOSPlatform("windows")]
     public static class KMessageBox
     {
         // 非公開フィールド

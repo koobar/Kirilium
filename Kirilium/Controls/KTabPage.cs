@@ -1,8 +1,10 @@
 ﻿using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KTabPage
     {
         // コンストラクタ

@@ -1,9 +1,11 @@
 ﻿using Kirilium.Themes;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class KColorTable : ProfessionalColorTable
     {
         #region MenuStrip

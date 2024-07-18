@@ -1,10 +1,12 @@
 ﻿using Kirilium.Controls.Elements;
 using Kirilium.Themes;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using static Kirilium.WinApi.Dwmapi;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KContextMenuStrip : ContextMenuStrip
     {
         // コンストラクタ

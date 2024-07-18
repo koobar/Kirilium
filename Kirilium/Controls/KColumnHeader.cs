@@ -1,8 +1,10 @@
 ﻿using Kirilium.Controls.Elements;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KColumnHeader
     {
         // 非公開フィールド

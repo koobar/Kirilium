@@ -1,5 +1,8 @@
-﻿namespace Kirilium.Themes
+﻿using System.Runtime.Versioning;
+
+namespace Kirilium.Themes
 {
+    [SupportedOSPlatform("windows")]
     public enum ColorKeys
     {
         // アプリケーション共通

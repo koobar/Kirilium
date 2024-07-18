@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.ToolStrip | ToolStripItemDesignerAvailability.StatusStrip)]
     public class KToolStripProgressBar : ToolStripControlHost
     {

@@ -1,185 +1,118 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5613060F-38D7-473E-92D9-0C6EE57BA206}</ProjectGuid>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <RootNamespace>Kirilium</RootNamespace>
-    <AssemblyName>Kirilium</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Controls\Collection\NotificationList.cs" />
-    <Compile Include="Controls\Elements\KDetailsListColumnHeaderRenderer.cs">
+    <Compile Update="Controls\Elements\KDetailsListColumnHeaderRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\KDetailsListItemRenderer.cs">
+    <Compile Update="Controls\Elements\KDetailsListItemRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\KColumnHeader.cs" />
-    <Compile Include="Controls\KColumnHeaderAutoResizeStyle.cs" />
-    <Compile Include="Controls\Elements\InternalListBox.cs">
+    <Compile Update="Controls\Elements\InternalListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\InternalListView.cs">
+    <Compile Update="Controls\Elements\InternalListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\InternalTextBox.cs">
+    <Compile Update="Controls\Elements\InternalTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\KColorTable.cs" />
-    <Compile Include="Controls\Elements\KListViewColumnHeaderWindow.cs" />
-    <Compile Include="Controls\Elements\ListViewColumnHeaderWindowMouseMoveEventArgs.cs" />
-    <Compile Include="Controls\Elements\SeekBarSlidePanel.cs">
+    <Compile Update="Controls\Elements\SeekBarSlidePanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\TabCloseEventArgs.cs" />
-    <Compile Include="Controls\Elements\TabControlContentRenderer.cs">
+    <Compile Update="Controls\Elements\TabControlContentRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\TabControlHeaderRenderer.cs">
+    <Compile Update="Controls\Elements\TabControlHeaderRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\TabHeaderRenderingElement.cs" />
-    <Compile Include="Controls\KCheckBox.cs">
+    <Compile Update="Controls\KCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KContextMenuStrip.cs">
+    <Compile Update="Controls\KContextMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KDetailsList.cs">
+    <Compile Update="Controls\KDetailsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\KDetailsListItem.cs" />
-    <Compile Include="Controls\KGroupBox.cs">
+    <Compile Update="Controls\KGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KLabel.cs">
+    <Compile Update="Controls\KLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KListView.cs">
+    <Compile Update="Controls\KListView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\KListView.Designer.cs">
-      <DependentUpon>KListView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\KPanel.cs">
+    <Compile Update="Controls\KPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KSeekBar.cs">
+    <Compile Update="Controls\KSeekBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KMenuStrip.cs">
+    <Compile Update="Controls\KMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KRadioButton.cs">
+    <Compile Update="Controls\KRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KStatusLabel.cs">
+    <Compile Update="Controls\KStatusLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KStatusStrip.cs">
+    <Compile Update="Controls\KStatusStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KTabControl.cs">
+    <Compile Update="Controls\KTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KTabPage.cs" />
-    <Compile Include="Controls\KToolStrip.cs">
+    <Compile Update="Controls\KToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KToolStripButton.cs">
+    <Compile Update="Controls\KToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KToolStripMenuItem.cs">
+    <Compile Update="Controls\KToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Elements\ScrollBarSlidePanel.cs">
+    <Compile Update="Controls\Elements\ScrollBarSlidePanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KButton.cs">
+    <Compile Update="Controls\KButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KComboBox.cs">
+    <Compile Update="Controls\KComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KControl.cs" />
-    <Compile Include="Controls\KHScrollBar.cs">
+    <Compile Update="Controls\KHScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KListBox.cs">
+    <Compile Update="Controls\KListBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\KProgressBar.cs">
+    <Compile Update="Controls\KProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KTextBox.cs">
+    <Compile Update="Controls\KTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\KToolStripProgressBar.cs">
+    <Compile Update="Controls\KToolStripProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KToolStripSeparator.cs">
+    <Compile Update="Controls\KToolStripSeparator.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KVScrollBar.cs">
+    <Compile Update="Controls\KVScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\KWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\KLabelTextLayout.cs" />
-    <Compile Include="Dialogs\KMessageBox.cs" />
-    <Compile Include="IconRenderer.cs" />
-    <Compile Include="OperatingSystem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="ThemeManager.cs" />
-    <Compile Include="Themes\ColorKeys.cs" />
-    <Compile Include="Themes\DarkTheme.cs" />
-    <Compile Include="Themes\LightTheme.cs" />
-    <Compile Include="Themes\Theme.cs" />
-    <Compile Include="WinApi\Uxtheme.cs" />
-    <Compile Include="VersionInfo.cs" />
-    <Compile Include="WinApi\Dwmapi.cs" />
-    <Compile Include="WinApi\User32.cs" />
-    <Compile Include="WinApi\WindowMessages.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
 </Project>

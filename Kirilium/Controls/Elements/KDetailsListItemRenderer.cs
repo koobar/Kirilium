@@ -2,10 +2,12 @@
 using Kirilium.Themes;
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class KDetailsListItemRenderer : UserControl
     {
         // 非公開フィールド

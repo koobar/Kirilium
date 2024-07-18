@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class TabControlHeaderRenderer : Control
     {
         // 非公開定数

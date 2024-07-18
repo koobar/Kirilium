@@ -2,10 +2,12 @@
 using Kirilium.Themes;
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public partial class KListView : UserControl
     {
         // 非公開フィールド

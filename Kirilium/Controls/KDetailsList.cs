@@ -1,10 +1,12 @@
 ﻿using Kirilium.Controls.Collection;
 using Kirilium.Controls.Elements;
 using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public partial class KDetailsList : UserControl
     {
         // 非公開定数

@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace Kirilium.Themes
 {
     /// <summary>
     /// ダークテーマの配色を定義したクラスです。
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class DarkTheme : Theme
     {
         // コンストラクタ

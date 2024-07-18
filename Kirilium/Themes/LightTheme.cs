@@ -1,7 +1,12 @@
 ﻿using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace Kirilium.Themes
 {
+    /// <summary>
+    /// ライトテーマの配色を定義したクラス
+    /// </summary>
+    [SupportedOSPlatform("windows")]
     public class LightTheme : Theme
     {
         public LightTheme() : base()

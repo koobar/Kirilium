@@ -1,9 +1,11 @@
 ﻿using Kirilium.Themes;
 using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KLabel : Control
     {
         // 非公開フィールド

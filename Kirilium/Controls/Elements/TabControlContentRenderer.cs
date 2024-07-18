@@ -1,10 +1,12 @@
 ﻿using Kirilium.Themes;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class TabControlContentRenderer : Control
     {
         // 非公開フィールド

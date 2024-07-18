@@ -1,11 +1,13 @@
 ﻿using Kirilium.Themes;
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.MenuStrip | ToolStripItemDesignerAvailability.ContextMenuStrip)]
     public class KToolStripMenuItem : ToolStripMenuItem
     {

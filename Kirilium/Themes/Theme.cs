@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using static Kirilium.WinApi.Dwmapi;
 using static Kirilium.WinApi.Uxtheme;
 
 namespace Kirilium.Themes
 {
+    [SupportedOSPlatform("windows")]
     public class Theme
     {
         // 非公開フィールド

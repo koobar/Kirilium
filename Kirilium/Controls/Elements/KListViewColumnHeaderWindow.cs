@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using static Kirilium.WinApi.WindowMessages;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class KListViewColumnHeaderWindow : NativeWindow
     {
         // イベント

@@ -1,8 +1,10 @@
 ﻿using Kirilium.Themes;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     internal static class KControl
     {
         /// <summary>

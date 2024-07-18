@@ -1,9 +1,11 @@
 ﻿using Kirilium.Themes;
 using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls.Elements
 {
+    [SupportedOSPlatform("windows")]
     internal class InternalListBox : ListBox
     {
         // コンストラクタ

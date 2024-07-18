@@ -1,7 +1,9 @@
 ﻿using Kirilium.Controls.Collection;
+using System.Runtime.Versioning;
 
 namespace Kirilium.Controls
 {
+    [SupportedOSPlatform("windows")]
     public class KDetailsListItem
     {
         // 非公開フィールド

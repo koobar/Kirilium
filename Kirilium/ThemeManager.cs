@@ -1,9 +1,11 @@
 ﻿using Kirilium.Themes;
 using Microsoft.Win32;
 using System;
+using System.Runtime.Versioning;
 
 namespace Kirilium
 {
+    [SupportedOSPlatform("windows")]
     public static class ThemeManager
     {
         // 非公開定数

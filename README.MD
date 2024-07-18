@@ -67,11 +67,8 @@ ThemeManager.CurrentTheme = new DarkTheme();
 ## 動作環境
 Kirilium は、次の要件を満たす環境で動作します。  
 
-  - .NET Framework 4.0 Client Profile もしくはそれ以降のバージョン
+  - .NET 6 またはそれ以降
   - Windows 10 以降
-
-### .NET (Core) で使用する場合
-.NET Core や .NET 5.0 以降で Kirilium を使用する場合、ソースコードからご自身でビルドしていただく必要があります。そのうちこれらの環境のためのバイナリを配布する予定です。
 
 ## ライセンス
 Kirilium は、MITライセンスで配布されるオープンソースソフトウェアです。

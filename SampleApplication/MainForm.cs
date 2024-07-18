@@ -2,10 +2,12 @@
 using Kirilium.Controls;
 using Kirilium.Themes;
 using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace SampleApplication
 {
+    [SupportedOSPlatform("windows")]
     public partial class MainForm : KWindow
     {
         public MainForm()

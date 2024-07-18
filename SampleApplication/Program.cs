@@ -1,10 +1,12 @@
 ﻿using Kirilium;
 using Kirilium.Themes;
 using System;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace SampleApplication
 {
+    [SupportedOSPlatform("windows")]
     static class Program
     {
         /// <summary>

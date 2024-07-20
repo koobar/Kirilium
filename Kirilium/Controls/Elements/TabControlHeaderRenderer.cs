@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class TabControlHeaderRenderer : Control
+    internal class TabControlHeaderRenderer : KControl
     {
         // 非公開定数
         private const int ICON_SIZE = 16;
@@ -24,26 +24,9 @@ namespace Kirilium.Controls.Elements
         public event EventHandler<TabCloseEventArgs> TabCloseButtonPressed;
 
         // コンストラクタ
-        public TabControlHeaderRenderer()
+        public TabControlHeaderRenderer() : base()
         {
             this.tabHeaders = new List<TabHeaderRenderingElement>();
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        ~TabControlHeaderRenderer()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         #region プロパティ

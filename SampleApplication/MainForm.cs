@@ -68,7 +68,7 @@ namespace SampleApplication
             contextMenu.Items.Add(new KToolStripMenuItem() { Text = "Undo(&U)", ShortcutKeys = Keys.Control | Keys.Z });
             result.ContextMenuStrip = contextMenu;
 
-            for (int i = 0; i < 100; ++i)
+            for (int i = 0; i <= 21; ++i)
             {
                 var item = new KDetailsListItem();
                 item.SubItems.Add($"Item {i}");

@@ -1,4 +1,4 @@
-﻿using Kirilium.Controls.Collection;
+﻿using Kirilium.Collection;
 using Kirilium.Controls.Elements;
 using System;
 using System.Runtime.Versioning;
@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public partial class KDetailsList : UserControl
+    public partial class KDetailsList : KControl
     {
         // 非公開定数
         internal const int ELEMENTS_MARGIN = 3;

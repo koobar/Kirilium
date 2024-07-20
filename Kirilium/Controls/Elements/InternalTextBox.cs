@@ -14,6 +14,20 @@ namespace Kirilium.Controls.Elements
             base.BorderStyle = BorderStyle.None;
             base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.TextBoxBackColorNormal);
             base.ForeColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
+
+            ThemeManager.ThemeChanged += OnThemeChanged;
+        }
+
+        // デストラクタ
+        ~InternalTextBox()
+        {
+            ThemeManager.ThemeChanged -= OnThemeChanged;
+        }
+
+        private void OnThemeChanged(object sender, EventArgs e)
+        {
+            base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.TextBoxBackColorNormal);
+            base.ForeColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
         }
 
         protected override void OnGotFocus(EventArgs e)

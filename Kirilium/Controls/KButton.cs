@@ -7,53 +7,26 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KButton : Button
+    public class KButton : KControl
     {
-        // コンストラクタ
-        public KButton() : base()
-        {
-            this.Size = new Size(75, 25);
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-            this.DoubleBuffered = true;
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KButton()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
+        // 非公開フィールド
+        private Image image;
 
         #region プロパティ
 
         /// <summary>
-        /// コントロールがクリックされている最中であるかどうかを示す。
+        /// ボタンのイメージ
         /// </summary>
-        protected bool IsMouseClick { private set; get; }
-
-        /// <summary>
-        /// マウスカーソルがコントロールの領域内に存在するかどうかを示す。
-        /// </summary>
-        protected bool IsMouseOver
+        public Image Image
         {
+            set
+            {
+                this.image = value;
+                Invalidate();
+            }
             get
             {
-                if (this.DisplayRectangle.Contains(PointToClient(Cursor.Position)))
-                {
-                    return true;
-                }
-
-                return false;
+                return this.image;
             }
         }
 
@@ -76,72 +49,6 @@ namespace Kirilium.Controls
             }
 
             return ThemeManager.CurrentTheme.GetColor(ColorKeys.ButtonBackColorNormal);
-        }
-
-        #region マウス関連の処理のオーバーライド
-
-        /// <summary>
-        /// マウスカーソルがコントロールの領域内に侵入した場合の処理
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            Invalidate();
-            base.OnMouseEnter(e);
-        }
-
-        /// <summary>
-        /// マウスカーソルがコントロールの領域外に移動した場合の処理
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            Invalidate();
-            base.OnMouseLeave(e);
-        }
-
-        /// <summary>
-        /// マウスのボタンが押下された場合の処理
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (this.IsMouseOver)
-            {
-                if (e.Button == MouseButtons.Left)
-                {
-                    this.IsMouseClick = true;
-                }
-            }
-
-            Invalidate();
-            base.OnMouseDown(e);
-        }
-
-        /// <summary>
-        /// マウスのボタンが離された場合の処理
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            this.IsMouseClick = false;
-
-            Invalidate();
-            base.OnMouseUp(e);
-        }
-
-        #endregion
-
-        protected override void OnLostFocus(EventArgs e)
-        {
-            Invalidate();
-            base.OnLostFocus(e);
-        }
-
-        protected override void OnGotFocus(EventArgs e)
-        {
-            Invalidate();
-            base.OnGotFocus(e);
         }
 
         /// <summary>
@@ -188,7 +95,7 @@ namespace Kirilium.Controls
                 this.DisplayRectangle.Y, 
                 this.DisplayRectangle.Right - 1,
                 this.DisplayRectangle.Bottom - 1, 
-                KControl.GetBorderColor(this.Focused, this.IsMouseOver, this.Enabled));
+                GetBorderColor());
         }
     }
 }

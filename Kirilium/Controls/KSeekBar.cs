@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KSeekBar : Control
+    public class KSeekBar : KControl
     {
         // 非公開フィールド
         private readonly SeekBarSlidePanel slidePanel;
@@ -32,18 +32,6 @@ namespace Kirilium.Controls
             this.slidePanel.Parent = this;
             this.slidePanel.ValueChanged += OnValueChanged;
             this.slidePanel.SeekCompleted += OnSeekCompleted;
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KSeekBar()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         #region プロパティ

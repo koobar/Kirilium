@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KHScrollBar : Control
+    public class KHScrollBar : KControl
     {
         // 非公開フィールド
         private readonly KButton decrementButton;
@@ -51,19 +51,6 @@ namespace Kirilium.Controls
             {
                 Increment();
             };
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KHScrollBar()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         #region プロパティ

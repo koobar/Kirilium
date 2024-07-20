@@ -1,58 +1,12 @@
 ﻿using Kirilium.Themes;
-using System;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KGroupBox : Control
+    public class KGroupBox : KControl
     {
-        // コンストラクタ
-        public KGroupBox()
-        {
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            this.DoubleBuffered = true;
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KGroupBox()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        /// <summary>
-        /// コントロールのテキスト
-        /// </summary>
-        public new string Text
-        {
-            set
-            {
-                base.Text = value;
-                Invalidate();
-            }
-            get
-            {
-                return base.Text;
-            }
-        }
-
-        /// <summary>
-        /// テーマが変更された場合の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
         /// <summary>
         /// 描画処理
         /// </summary>

@@ -1,53 +1,122 @@
 ﻿using Kirilium.Themes;
 using System;
-using System.ComponentModel;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KCheckBox : CheckBox
+    public class KCheckBox : KControl
     {
-        // コンストラクタ
-        public KCheckBox()
-        {
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
+        // 非公開フィールド
+        private CheckState checkState;
 
-            this.DoubleBuffered = true;
+        #region イベント
 
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KCheckBox()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        #region コンストラクタ
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Padding Padding { get; set; }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new FlatStyle FlatStyle { get; set; }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Appearance Appearance { get; set; }
+        /// <summary>
+        /// コントロールのチェック状態が変更された場合に発生するイベント
+        /// </summary>
+        public event EventHandler CheckedChanged;
 
         #endregion
+
+        #region プロパティ
+
+        /// <summary>
+        /// チェック状態
+        /// </summary>
+        public CheckState CheckState
+        {
+            set
+            {
+                this.checkState = value;
+                Invalidate();
+
+                OnCheckedChanged();
+            }
+            get
+            {
+                return this.checkState;
+            }
+        }
+
+        /// <summary>
+        /// チェックされているかどうかを示す。
+        /// </summary>
+        public bool Checked
+        {
+            set
+            {
+                if (value)
+                {
+                    this.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    this.CheckState = CheckState.Unchecked;
+                }
+            }
+            get
+            {
+                if (this.CheckState != CheckState.Unchecked)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 三状態チェックボックスとして振舞うかどうか
+        /// </summary>
+        public bool ThreeState { set; get; }
+
+        #endregion
+
+        /// <summary>
+        /// コントロールのチェック状態が変更された場合の処理
+        /// </summary>
+        protected virtual void OnCheckedChanged()
+        {
+            this.CheckedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// マウスが押下された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (this.ThreeState)
+            {
+                switch (this.CheckState)
+                {
+                    case CheckState.Unchecked:
+                        this.CheckState = CheckState.Checked;
+                        break;
+                    case CheckState.Checked:
+                        this.CheckState = CheckState.Indeterminate;
+                        break;
+                    case CheckState.Indeterminate:
+                        this.CheckState = CheckState.Unchecked;
+                        break;
+                }
+            }
+            else
+            {
+                if (this.CheckState == CheckState.Unchecked)
+                {
+                    this.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    this.CheckState = CheckState.Unchecked;
+                }
+            }
+
+            base.OnMouseDown(e);
+        }
 
         /// <summary>
         /// 描画処理
@@ -62,7 +131,7 @@ namespace Kirilium.Controls
             Renderer.FillRect(e.Graphics, this.DisplayRectangle, ThemeManager.CurrentTheme.GetColor(ColorKeys.CheckBoxBackColorNormal));
 
             // 矩形の描画
-            var glyphBoxColor = KControl.GetBorderColor(this.Focused, this.DisplayRectangle.Contains(PointToClient(Cursor.Position)), this.Enabled);
+            var glyphBoxColor = GetBorderColor();
             var glyphBoxWidth = 12;
             var glyphBoxHeight = 12;
             var glyphBoxLeft = this.Padding.Left;
@@ -99,7 +168,7 @@ namespace Kirilium.Controls
                 0,
                 this.DisplayRectangle.Width - (glyphBoxLeft + glyphBoxWidth + 6),
                 this.DisplayRectangle.Height,
-                KControl.GetTextColor(this.Enabled, false),
+                GetTextColor(),
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.CheckBoxBackColorNormal),
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
         }

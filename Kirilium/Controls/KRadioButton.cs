@@ -1,53 +1,98 @@
 ﻿using Kirilium.Themes;
 using System;
-using System.ComponentModel;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KRadioButton : RadioButton
+    public class KRadioButton : KControl
     {
-        // コンストラクタ
-        public KRadioButton()
-        {
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
+        // 非公開フィールド
+        private bool isChecked;
 
-            this.DoubleBuffered = true;
+        #region イベント
 
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
+        /// <summary>
+        /// コントロールのチェック状態が変更された場合に発生するイベント
+        /// </summary>
+        public event EventHandler CheckedChanged;
 
-        // デストラクタ
-        ~KRadioButton()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
+        #endregion
 
         #region プロパティ
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Padding Padding { get; set; }
+        /// <summary>
+        /// チェックされているかどうかを示す。
+        /// </summary>
+        public bool Checked
+        {
+            set
+            {
+                this.isChecked = value;
+                
+                if (value)
+                {
+                    UncheckAnotherRadioButton();
+                }
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new FlatStyle FlatStyle { get; set; }
+                // 再描画
+                Invalidate();
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Appearance Appearance { get; set; }
+                // イベントを発生させる。
+                OnCheckedChanged();
+            }
+            get
+            {
+                return this.isChecked;
+            }
+        }
 
         #endregion
+
+        /// <summary>
+        /// 同じ親コントロールに配置された別のラジオボタンのチェックを解除する。
+        /// </summary>
+        private void UncheckAnotherRadioButton()
+        {
+            if (this.Parent != null)
+            {
+                foreach (var ctrl in this.Parent.Controls)
+                {
+                    if (ctrl == this)
+                    {
+                        continue;
+                    }
+
+                    if (ctrl is KRadioButton)
+                    {
+                        ((KRadioButton)ctrl).Checked = false;
+                    }
+                    else if (ctrl is RadioButton)
+                    {
+                        ((RadioButton)ctrl).Checked = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// コントロールのチェック状態が変更された場合の処理
+        /// </summary>
+        protected virtual void OnCheckedChanged()
+        {
+            this.CheckedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// マウスのボタンが押下された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            this.Checked = !this.Checked;
+            base.OnMouseDown(e);
+        }
 
         /// <summary>
         /// 描画処理
@@ -62,7 +107,7 @@ namespace Kirilium.Controls
             Renderer.FillRect(e.Graphics, this.DisplayRectangle, ThemeManager.CurrentTheme.GetColor(ColorKeys.RadioButtonBackColorNormal));
 
             // ラジオボタンのチェック図形を囲む円の描画
-            var glyphBoxColor = KControl.GetBorderColor(this.Focused, this.DisplayRectangle.Contains(PointToClient(Cursor.Position)), this.Enabled);
+            var glyphBoxColor = GetBorderColor();
             var glyphBoxWidth = 12;
             var glyphBoxHeight = 12;
             var glyphBoxLeft = this.Padding.Left;
@@ -90,7 +135,7 @@ namespace Kirilium.Controls
                 0,
                 this.DisplayRectangle.Width - (glyphBoxLeft + glyphBoxWidth + 6),
                 this.DisplayRectangle.Height,
-                KControl.GetTextColor(this.Enabled, false),
+                GetTextColor(),
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.RadioButtonBackColorNormal),
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
 

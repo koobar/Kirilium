@@ -1,4 +1,4 @@
-﻿using Kirilium.Controls.Collection;
+﻿using Kirilium.Collection;
 using Kirilium.Themes;
 using System.Windows.Forms;
 using System;
@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class KDetailsListColumnHeaderRenderer : UserControl
+    internal class KDetailsListColumnHeaderRenderer : KControl
     {
         // 非公開フィールド
         private readonly NotificationList<KColumnHeader> columnHeaders;
@@ -18,19 +18,6 @@ namespace Kirilium.Controls.Elements
         {
             this.columnHeaders = new NotificationList<KColumnHeader>();
             this.columnHeaders.ValueCollectionChanged += OnColumnHeaderCollectionChanged;
-
-            // 描画設定
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KDetailsListColumnHeaderRenderer()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
         }
 
         /// <summary>
@@ -82,16 +69,6 @@ namespace Kirilium.Controls.Elements
             }
 
             return Rectangle.Empty;
-        }
-
-        /// <summary>
-        /// テーマが変更された場合の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Refresh();
         }
 
         /// <summary>

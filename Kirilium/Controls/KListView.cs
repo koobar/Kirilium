@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public partial class KListView : UserControl
+    public partial class KListView : KControl
     {
         // 非公開フィールド
         private readonly InternalListView internalListView;
@@ -24,10 +24,6 @@ namespace Kirilium.Controls
         {
             InitializeComponent();
 
-            base.BorderStyle = BorderStyle.None;
-            base.Padding = new Padding(1);
-            base.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ListViewBackColor);
-
             this.internalListView = new InternalListView();
             this.internalListView.Parent = this;
             this.internalListView.Dock = DockStyle.Fill;
@@ -35,12 +31,6 @@ namespace Kirilium.Controls
             this.internalListView.Click += OnClick;
             this.internalListView.ColumnClick += OnColumnClick;
             this.internalListView.DoubleClick += OnDoubleClick;
-
-            // 描画設定
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         #region プロパティ

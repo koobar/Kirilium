@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class ScrollBarSlidePanel : Control
+    internal class ScrollBarSlidePanel : KControl
     {
         // イベント
         public event EventHandler Slide;
@@ -21,31 +21,9 @@ namespace Kirilium.Controls.Elements
         private int thumbSize;
 
         // コンストラクタ
-        public ScrollBarSlidePanel()
+        public ScrollBarSlidePanel() : base()
         {
             this.ThumbSize = 45;
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        ~ScrollBarSlidePanel()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        /// <summary>
-        /// テーマが変更された場合の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Kirilium.Controls.Collection;
+﻿using Kirilium.Collection;
 using Kirilium.Themes;
 using System;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class KDetailsListItemRenderer : UserControl
+    internal class KDetailsListItemRenderer : KControl
     {
         // 非公開フィールド
         private readonly KDetailsListColumnHeaderRenderer columnHeaderRenderer;
@@ -41,13 +41,6 @@ namespace Kirilium.Controls.Elements
             // 初期設定
             this.ItemHeight = 15;
             this.ScrollSpeed = 3;
-            this.AutoScroll = false;
-
-            // 描画設定
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         #region プロパティ
@@ -171,7 +164,7 @@ namespace Kirilium.Controls.Elements
         /// </summary>
         private void UpdateVerticalScrollBarVisible()
         {
-            int n = GetNumItemsVisible();
+            int n = GetNumItemsVisible() + 1;
             int max = this.Items.Count - n;
             if (max < 0)
             {
@@ -179,7 +172,7 @@ namespace Kirilium.Controls.Elements
             }
 
             this.verticalScrollBar.Maximum = max + this.ScrollSpeed;
-            this.verticalScrollBar.Visible = this.Items.Count > n;
+            this.verticalScrollBar.Visible = this.Items.Count >= n;
         }
 
         /// <summary>

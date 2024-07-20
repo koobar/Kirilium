@@ -1,5 +1,4 @@
 ﻿using Kirilium.Themes;
-using System;
 using System.Collections.Generic;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
@@ -7,7 +6,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class TabControlContentRenderer : Control
+    internal class TabControlContentRenderer : KControl
     {
         // 非公開フィールド
         private readonly List<KTabPage> tabPages;
@@ -17,23 +16,6 @@ namespace Kirilium.Controls.Elements
         public TabControlContentRenderer()
         {
             this.tabPages = new List<KTabPage>();
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        ~TabControlContentRenderer()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         #region プロパティ

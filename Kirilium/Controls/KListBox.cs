@@ -1,13 +1,12 @@
 ﻿using Kirilium.Controls.Elements;
 using Kirilium.Themes;
-using System;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KListBox : UserControl
+    public class KListBox : KControl
     {
         // 非公開フィールド
         private readonly InternalListBox internalListBox;
@@ -18,7 +17,11 @@ namespace Kirilium.Controls
             this.Padding = new Padding(1);
             this.internalListBox = new InternalListBox();
             this.internalListBox.Parent = this;
-            this.internalListBox.Dock = DockStyle.Fill;
+            this.internalListBox.Left = 1;
+            this.internalListBox.Top = 1;
+            this.internalListBox.Width = this.DisplayRectangle.Width - 1 - this.internalListBox.Left;
+            this.internalListBox.Height = this.DisplayRectangle.Height - 1 - this.internalListBox.Top;
+            this.internalListBox.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             this.internalListBox.GotFocus += delegate
             {
                 Invalidate();
@@ -28,24 +31,6 @@ namespace Kirilium.Controls
                 Invalidate();
             };
             this.internalListBox.IntegralHeight = false;
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KListBox()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         #region プロパティ
@@ -58,20 +43,6 @@ namespace Kirilium.Controls
             get
             {
                 return this.internalListBox.Items;
-            }
-        }
-
-        protected bool IsMouseOver
-        {
-            get
-            {
-                if (this.DisplayRectangle.Contains(PointToClient(Cursor.Position)) ||
-                    this.internalListBox.DisplayRectangle.Contains(PointToClient(Cursor.Position)))
-                {
-                    return true;
-                }
-
-                return false;
             }
         }
 
@@ -91,21 +62,9 @@ namespace Kirilium.Controls
                 e.Graphics, 
                 0,
                 0,
-                this.DisplayRectangle.Right,
-                this.DisplayRectangle.Bottom,
-                KControl.GetBorderColor(this.Focused || this.internalListBox.Focused, this.IsMouseOver, this.Enabled));
-        }
-
-        protected override void OnLostFocus(EventArgs e)
-        {
-            Invalidate();
-            base.OnLostFocus(e);
-        }
-
-        protected override void OnGotFocus(EventArgs e)
-        {
-            Invalidate();
-            base.OnGotFocus(e);
+                this.DisplayRectangle.Right - 1,
+                this.DisplayRectangle.Bottom - 1,
+                GetBorderColor(this.Focused || this.internalListBox.Focused, this.IsMouseOver, this.Enabled));
         }
     }
 }

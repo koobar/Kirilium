@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls.Elements
 {
     [SupportedOSPlatform("windows")]
-    internal class SeekBarSlidePanel : Control
+    internal class SeekBarSlidePanel : KControl
     {
         // 非公開定数
         private const int THUMB_SIZE = 15;
@@ -24,26 +24,9 @@ namespace Kirilium.Controls.Elements
         private int value;
 
         // コンストラクタ
-        public SeekBarSlidePanel()
+        public SeekBarSlidePanel() : base()
         {
             this.LineWidth = 3f;
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        ~SeekBarSlidePanel()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         protected override void OnHandleCreated(EventArgs e)

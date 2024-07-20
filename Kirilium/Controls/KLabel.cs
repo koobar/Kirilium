@@ -1,52 +1,16 @@
 ﻿using Kirilium.Themes;
-using System;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KLabel : Control
+    public class KLabel : KControl
     {
         // 非公開フィールド
         private KLabelTextLayout textLayout;
 
-        // コンストラクタ
-        public KLabel()
-        {
-            this.textLayout = KLabelTextLayout.LeftCenter;
-
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KLabel()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
         #region プロパティ
-
-        /// <summary>
-        /// コントロールのテキスト
-        /// </summary>
-        public new string Text
-        {
-            set
-            {
-                base.Text = value;
-                Invalidate();
-            }
-            get
-            {
-                return base.Text;
-            }
-        }
 
         /// <summary>
         /// テキストの位置
@@ -95,16 +59,6 @@ namespace Kirilium.Controls
                 default:
                     return TextFormatFlags.Default;
             }
-        }
-
-        /// <summary>
-        /// テーマが変更された場合の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Kirilium.Controls.Collection;
+﻿using Kirilium.Collection;
 using Kirilium.Controls.Elements;
 using System;
 using System.Runtime.Versioning;
@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KTabControl : Control
+    public class KTabControl : KControl
     {
         // 非公開フィールド
         private readonly TabControlHeaderRenderer headerRenderer;
@@ -35,14 +35,6 @@ namespace Kirilium.Controls
 
             this.Controls.Add(this.contentRenderer);
             this.Controls.Add(this.headerRenderer);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KTabControl()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
         }
 
         #region プロパティ
@@ -63,7 +55,7 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
-        /// [BETA]タブページを閉じることができるかどうか
+        /// タブページを閉じることができるかどうか
         /// </summary>
         public bool IsClosable { set; get; }
 
@@ -151,16 +143,6 @@ namespace Kirilium.Controls
             {
                 this.SelectedIndex = 0;
             }
-        }
-
-        /// <summary>
-        /// テーマが変更された場合の処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         /// <summary>

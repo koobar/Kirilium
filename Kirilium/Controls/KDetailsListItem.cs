@@ -1,4 +1,4 @@
-﻿using Kirilium.Controls.Collection;
+﻿using Kirilium.Collection;
 using System.Runtime.Versioning;
 
 namespace Kirilium.Controls

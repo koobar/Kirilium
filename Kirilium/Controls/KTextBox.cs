@@ -1,15 +1,13 @@
 ﻿using Kirilium.Controls.Elements;
 using Kirilium.Themes;
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace Kirilium.Controls
 {
     [SupportedOSPlatform("windows")]
-    public class KTextBox : UserControl
+    public class KTextBox : KControl
     {
         // 非公開フィールド
         private readonly InternalTextBox internalTextBox;
@@ -22,11 +20,12 @@ namespace Kirilium.Controls
         // コンストラクタ
         public KTextBox()
         {
-            base.Padding = new Padding(1);
-            
             this.internalTextBox = new InternalTextBox();
-            this.internalTextBox.Dock = DockStyle.Fill;
-            this.internalTextBox.Parent = this;
+            this.internalTextBox.Left = 1;
+            this.internalTextBox.Top = 1;
+            this.internalTextBox.Width = this.Width - 1 - this.internalTextBox.Left;
+            this.internalTextBox.Height = this.Height - 1 - this.internalTextBox.Left;
+
             this.internalTextBox.TextChanged += delegate (object sender, EventArgs e)
             {
                 this.TextChanged?.Invoke(sender, e);
@@ -40,53 +39,10 @@ namespace Kirilium.Controls
                 this.ReadOnlyChanged?.Invoke(sender, e);
             };
 
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-
-            ThemeManager.ThemeChanged += OnThemeChanged;
-        }
-
-        // デストラクタ
-        ~KTextBox()
-        {
-            ThemeManager.ThemeChanged -= OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, EventArgs e)
-        {
-            if (this.internalTextBox.ReadOnly)
-            {
-                this.internalTextBox.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.TextBoxBackColorReadOnly);
-                this.internalTextBox.ForeColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.TextBoxForeColorReadOnly);
-            }
-            else
-            {
-                this.internalTextBox.BackColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.TextBoxBackColorNormal);
-                this.internalTextBox.ForeColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
-            }
-
-            Invalidate();
+            this.Controls.Add(this.internalTextBox);
         }
 
         #region プロパティ
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Padding Padding { get; set; }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Color BackColor { get; set; }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Color ForeColor { get; set; }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new BorderStyle BorderStyle{ get; set; }
 
         /// <summary>
         /// 複数行モード
@@ -163,20 +119,6 @@ namespace Kirilium.Controls
             }
         }
 
-        protected bool IsMouseOver
-        {
-            get
-            {
-                if (this.DisplayRectangle.Contains(PointToClient(Cursor.Position)) ||
-                    this.internalTextBox.DisplayRectangle.Contains(PointToClient(Cursor.Position)))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
         #endregion
 
         /// <summary>
@@ -191,11 +133,25 @@ namespace Kirilium.Controls
             // コントロールの境界線を描画する。
             Renderer.DrawRect(
                 e.Graphics,
-                this.DisplayRectangle.X - 1,
-                this.DisplayRectangle.Y - 1,
-                this.DisplayRectangle.Right,
-                this.DisplayRectangle.Bottom,
-                KControl.GetBorderColor(this.internalTextBox.Focused, this.IsMouseOver, this.internalTextBox.Enabled));
+                0,
+                0,
+                this.DisplayRectangle.Right - 1,
+                this.DisplayRectangle.Bottom - 1,
+                GetBorderColor(this.internalTextBox.Focused, this.IsMouseOver, this.internalTextBox.Enabled));
+        }
+
+        /// <summary>
+        /// コントロールのサイズが変更された場合の処理
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            this.internalTextBox.Left = 1;
+            this.internalTextBox.Top = 1;
+            this.internalTextBox.Width = this.Width - 1 - this.internalTextBox.Left;
+            this.internalTextBox.Height = this.Height - 1 - this.internalTextBox.Left;
+
+            base.OnSizeChanged(e);
         }
     }
 }

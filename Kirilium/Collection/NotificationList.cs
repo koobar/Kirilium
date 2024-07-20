@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Kirilium.Controls.Collection
+namespace Kirilium.Collection
 {
     public class NotificationList<T> : IEnumerable<T>, IList<T>
     {

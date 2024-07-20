@@ -20,12 +20,8 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <Compile Update="Controls\Elements\KDetailsListColumnHeaderRenderer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Controls\Elements\KDetailsListItemRenderer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Controls\Elements\KDetailsListColumnHeaderRenderer.cs" />
+    <Compile Update="Controls\Elements\KDetailsListItemRenderer.cs" />
     <Compile Update="Controls\Elements\InternalListBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -35,54 +31,30 @@
     <Compile Update="Controls\Elements\InternalTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Elements\SeekBarSlidePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Elements\TabControlContentRenderer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Elements\TabControlHeaderRenderer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KContextMenuStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KDetailsList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Controls\KGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KListView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Controls\Elements\SeekBarSlidePanel.cs" />
+    <Compile Update="Controls\Elements\TabControlContentRenderer.cs" />
+    <Compile Update="Controls\Elements\TabControlHeaderRenderer.cs" />
+    <Compile Update="Controls\KCheckBox.cs" />
+    <Compile Update="Controls\KContextMenuStrip.cs" />
+    <Compile Update="Controls\KDetailsList.cs" />
+    <Compile Update="Controls\KGroupBox.cs" />
+    <Compile Update="Controls\KLabel.cs" />
+    <Compile Update="Controls\KListView.cs" />
     <Compile Update="Controls\KPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\KSeekBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\KSeekBar.cs" />
     <Compile Update="Controls\KMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\KRadioButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\KRadioButton.cs" />
     <Compile Update="Controls\KStatusLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Controls\KStatusStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\KTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\KTabControl.cs" />
     <Compile Update="Controls\KToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -92,36 +64,22 @@
     <Compile Update="Controls\KToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Elements\ScrollBarSlidePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\Elements\ScrollBarSlidePanel.cs" />
+    <Compile Update="Controls\KButton.cs" />
     <Compile Update="Controls\KComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\KHScrollBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KListBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Controls\KProgressBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\KTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Controls\KHScrollBar.cs" />
+    <Compile Update="Controls\KListBox.cs" />
+    <Compile Update="Controls\KProgressBar.cs" />
+    <Compile Update="Controls\KTextBox.cs" />
     <Compile Update="Controls\KToolStripProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Controls\KToolStripSeparator.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\KVScrollBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\KVScrollBar.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>

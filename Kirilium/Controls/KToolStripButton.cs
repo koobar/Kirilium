@@ -74,6 +74,7 @@ namespace Kirilium.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             var backColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ToolStripBackColor);
+            var borderColor = backColor;
 
             // 背景を初期化
             e.Graphics.Clear(backColor);
@@ -95,14 +96,7 @@ namespace Kirilium.Controls
                     e.ClipRectangle.Bottom - 1,
                     backColor);
 
-                // 境界線の描画
-                Renderer.DrawRect(
-                    e.Graphics,
-                    e.ClipRectangle.X, 
-                    e.ClipRectangle.Y, 
-                    e.ClipRectangle.Right - 2, 
-                    e.ClipRectangle.Bottom - 1,
-                    ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderHighlight));
+                borderColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationBorderHighlight);
             }
 
             if (this.DisplayStyle == ToolStripItemDisplayStyle.Image)
@@ -182,6 +176,15 @@ namespace Kirilium.Controls
                     backColor,
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             }
+
+            // 境界線の描画
+            Renderer.DrawRect(
+                e.Graphics,
+                e.ClipRectangle.X,
+                e.ClipRectangle.Y,
+                e.ClipRectangle.Right - 2,
+                e.ClipRectangle.Bottom - 1,
+                borderColor);
         }
     }
 }

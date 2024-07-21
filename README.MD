@@ -17,8 +17,8 @@ Kirilium には、次のような便利な機能があります。
     Kirilium で提供されるコントロールと、Windows Forms 標準のコントロールは共存可能で、  
     同時に使用することができます。
 
-![ライトテーマ](/screenshot/light.PNG)
-![ダークテーマ](/screenshot/dark.PNG)
+![ライトテーマ](/screenshot/light.PNG "ライトテーマの表示例")
+![ダークテーマ](/screenshot/dark.PNG "ダークテーマの表示例")
 
 ## 使い方
 ここでは、Kirilium の使用方法について、簡単にご説明します。具体的な使用方法については、サンプルアプリケーションを参考にしてください。

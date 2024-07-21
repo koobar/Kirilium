@@ -10,8 +10,8 @@ namespace Kirilium
     public static class Renderer
     {
         // 非公開フィールド
-        private readonly static float PPI = GetPPI();                           // 1インチあたりのピクセル数
-        private readonly static float NormalPenWidth = PPI / 96.0f;             // 標準のペンの幅
+        private readonly static float ScaleFactor = GetPPI() / 96.0f;           // 描画スケール
+        private readonly static float NormalPenWidth = 1 * ScaleFactor;             // 標準のペンの幅
         private readonly static float BoldPenWidth = NormalPenWidth * 2.0f;     // 太いペンの幅
 
         /// <summary>
@@ -25,6 +25,11 @@ namespace Kirilium
                 return Math.Max(bmp.HorizontalResolution, bmp.VerticalResolution);
             }
         }
+
+        /// <summary>
+        /// DPIに応じたスケーリングを使用するかどうか
+        /// </summary>
+        internal static bool ScaleDpi { set; get; } = true;
 
         #region ペンの作成
 
@@ -63,6 +68,14 @@ namespace Kirilium
         /// <param name="pen"></param>
         public static void DrawLine(Graphics deviceContext, float x, float y, float x2, float y2, Pen pen)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                x2 = x2 * ScaleFactor;
+                y2 = y2 * ScaleFactor;
+            }
+
             deviceContext.DrawLine(pen, x, y, x2, y2);
         }
 
@@ -98,6 +111,14 @@ namespace Kirilium
         /// <param name="pen"></param>
         public static void DrawRect(Graphics deviceContext, float x, float y, float width, float height, Pen pen)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             deviceContext.DrawRectangle(pen, x, y, width, height);
         }
 
@@ -126,9 +147,15 @@ namespace Kirilium
         /// <param name="pen"></param>
         public static void DrawRect(Graphics deviceContext, Rectangle rectangle, Pen pen)
         {
-            deviceContext.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            if (ScaleDpi)
+            {
+                deviceContext.DrawRectangle(pen, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor);
+            }
+            else
+            {
+                deviceContext.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            }
         }
-
 
         /// <summary>
         /// 矩形を描画する。
@@ -152,7 +179,14 @@ namespace Kirilium
         /// <param name="pen"></param>
         public static void DrawRect(Graphics deviceContext, RectangleF rectangle, Pen pen)
         {
-            deviceContext.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            if (ScaleDpi)
+            {
+                deviceContext.DrawRectangle(pen, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor);
+            }
+            else
+            {
+                deviceContext.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            }
         }
 
         /// <summary>
@@ -185,6 +219,14 @@ namespace Kirilium
         /// <param name="fillColor"></param>
         public static void FillRect(Graphics deviceContext, float x, float y, float width, float height, Color lineColor, Color fillColor)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             // 矩形領域を塗りつぶす。
             using (var brush = new SolidBrush(fillColor))
             {
@@ -221,16 +263,33 @@ namespace Kirilium
         /// <param name="fillColor"></param>
         public static void FillRect(Graphics deviceContext, Rectangle rectangle, Color lineColor, Color fillColor)
         {
-            // 矩形領域を塗りつぶす。
-            using (var brush = new SolidBrush(fillColor))
+            if (ScaleDpi)
             {
-                deviceContext.FillRectangle(brush, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-            }
+                // 矩形領域を塗りつぶす。
+                using (var brush = new SolidBrush(fillColor))
+                {
+                    deviceContext.FillRectangle(brush, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor);
+                }
 
-            // 境界線を描画する。
-            using (var pen = CreateNormalPen(lineColor))
+                // 境界線を描画する。
+                using (var pen = CreateNormalPen(lineColor))
+                {
+                    DrawRect(deviceContext, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor, pen);
+                }
+            }
+            else
             {
-                DrawRect(deviceContext, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, pen);
+                // 矩形領域を塗りつぶす。
+                using (var brush = new SolidBrush(fillColor))
+                {
+                    deviceContext.FillRectangle(brush, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+                }
+
+                // 境界線を描画する。
+                using (var pen = CreateNormalPen(lineColor))
+                {
+                    DrawRect(deviceContext, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, pen);
+                }
             }
         }
 
@@ -254,16 +313,33 @@ namespace Kirilium
         /// <param name="fillColor"></param>
         public static void FillRect(Graphics deviceContext, RectangleF rectangle, Color lineColor, Color fillColor)
         {
-            // 矩形領域を塗りつぶす。
-            using (var brush = new SolidBrush(fillColor))
+            if (ScaleDpi)
             {
-                deviceContext.FillRectangle(brush, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-            }
+                // 矩形領域を塗りつぶす。
+                using (var brush = new SolidBrush(fillColor))
+                {
+                    deviceContext.FillRectangle(brush, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor);
+                }
 
-            // 境界線を描画する。
-            using (var pen = CreateNormalPen(lineColor))
+                // 境界線を描画する。
+                using (var pen = CreateNormalPen(lineColor))
+                {
+                    DrawRect(deviceContext, rectangle.X * ScaleFactor, rectangle.Y * ScaleFactor, rectangle.Width * ScaleFactor, rectangle.Height * ScaleFactor, pen);
+                }
+            }
+            else
             {
-                DrawRect(deviceContext, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, pen);
+                // 矩形領域を塗りつぶす。
+                using (var brush = new SolidBrush(fillColor))
+                {
+                    deviceContext.FillRectangle(brush, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+                }
+
+                // 境界線を描画する。
+                using (var pen = CreateNormalPen(lineColor))
+                {
+                    DrawRect(deviceContext, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, pen);
+                }
             }
         }
 
@@ -295,6 +371,14 @@ namespace Kirilium
         {
             var mode = deviceContext.SmoothingMode;
             deviceContext.SmoothingMode = SmoothingMode.AntiAlias;
+
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
 
             using (var pen = CreateNormalPen(color))
             {
@@ -344,6 +428,14 @@ namespace Kirilium
             var mode = deviceContext.SmoothingMode;
             deviceContext.SmoothingMode = SmoothingMode.AntiAlias;
 
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             using (var brush = new SolidBrush(color))
             {
                 deviceContext.FillEllipse(brush, x, y, width, height);
@@ -386,6 +478,18 @@ namespace Kirilium
         /// <param name="color"></param>
         public static void DrawPolygon(Graphics deviceContext, Point[] points, Color color)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new Point[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new Point((int)(points[i].X * ScaleFactor), (int)(points[i].Y * ScaleFactor));
+                }
+
+                points = scaledPoints;
+            }
+
             using (var pen = new Pen(color))
             {
                 deviceContext.DrawPolygon(pen, points);
@@ -400,6 +504,18 @@ namespace Kirilium
         /// <param name="points"></param>
         public static void DrawPolygon(Graphics deviceContext, Color color, params Point[] points)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new Point[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new Point((int)(points[i].X * ScaleFactor), (int)(points[i].Y * ScaleFactor));
+                }
+
+                points = scaledPoints;
+            }
+
             using (var pen = new Pen(color))
             {
                 deviceContext.DrawPolygon(pen, points);
@@ -414,6 +530,18 @@ namespace Kirilium
         /// <param name="color"></param>
         public static void DrawPolygon(Graphics deviceContext, PointF[] points, Color color)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new PointF[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new PointF(points[i].X * ScaleFactor, points[i].Y * ScaleFactor);
+                }
+
+                points = scaledPoints;
+            }
+
             using (var pen = new Pen(color))
             {
                 deviceContext.DrawPolygon(pen, points);
@@ -428,6 +556,18 @@ namespace Kirilium
         /// <param name="points"></param>
         public static void DrawPolygon(Graphics deviceContext, Color color, params PointF[] points)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new PointF[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new PointF(points[i].X * ScaleFactor, points[i].Y * ScaleFactor);
+                }
+
+                points = scaledPoints;
+            }
+
             using (var pen = new Pen(color))
             {
                 deviceContext.DrawPolygon(pen, points);
@@ -446,6 +586,18 @@ namespace Kirilium
         /// <param name="color"></param>
         public static void FillPolygon(Graphics deviceContext, Point[] points, Color color)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new Point[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new Point((int)(points[i].X * ScaleFactor), (int)(points[i].Y * ScaleFactor));
+                }
+
+                points = scaledPoints;
+            }
+
             using (var brush = new SolidBrush(color))
             {
                 deviceContext.FillPolygon(brush, points);
@@ -460,6 +612,18 @@ namespace Kirilium
         /// <param name="points"></param>
         public static void FillPolygon(Graphics deviceContext, Color color, params Point[] points)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new Point[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new Point((int)(points[i].X * ScaleFactor), (int)(points[i].Y * ScaleFactor));
+                }
+
+                points = scaledPoints;
+            }
+
             using (var brush = new SolidBrush(color))
             {
                 deviceContext.FillPolygon(brush, points);
@@ -474,6 +638,18 @@ namespace Kirilium
         /// <param name="color"></param>
         public static void FillPolygon(Graphics deviceContext, PointF[] points, Color color)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new PointF[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new PointF(points[i].X * ScaleFactor, points[i].Y * ScaleFactor);
+                }
+
+                points = scaledPoints;
+            }
+
             using (var brush = new SolidBrush(color))
             {
                 deviceContext.FillPolygon(brush, points);
@@ -488,6 +664,18 @@ namespace Kirilium
         /// <param name="points"></param>
         public static void FillPolygon(Graphics deviceContext, Color color, params PointF[] points)
         {
+            if (ScaleDpi)
+            {
+                var scaledPoints = new PointF[points.Length];
+
+                for (int i = 0; i < scaledPoints.Length; ++i)
+                {
+                    scaledPoints[i] = new PointF(points[i].X * ScaleFactor, points[i].Y * ScaleFactor);
+                }
+
+                points = scaledPoints;
+            }
+
             using (var brush = new SolidBrush(color))
             {
                 deviceContext.FillPolygon(brush, points);
@@ -509,6 +697,14 @@ namespace Kirilium
         /// <param name="img"></param>
         public static void DrawImageUnscaled(Graphics deviceContext, float x, float y, float width, float height, Image img)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             deviceContext.DrawImageUnscaled(img, (int)x, (int)y, (int)width, (int)height);
         }
 
@@ -545,6 +741,14 @@ namespace Kirilium
         /// <param name="img"></param>
         public static void DrawImage(Graphics deviceContext, float x, float y, float width, float height, Image img)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             deviceContext.DrawImage(img, (int)x, (int)y, (int)width, (int)height);
         }
 
@@ -593,6 +797,11 @@ namespace Kirilium
             Color backColor,
             TextFormatFlags textFormatFlags)
         {
+            if (ScaleDpi)
+            {
+                font = new Font(font.FontFamily, font.Size * ScaleFactor);
+            }
+
             TextRenderer.DrawText(
                     deviceContext,
                     text,
@@ -628,6 +837,14 @@ namespace Kirilium
             Color backColor,
             TextFormatFlags textFormatFlags)
         {
+            if (ScaleDpi)
+            {
+                x = x * ScaleFactor;
+                y = y * ScaleFactor;
+                width = width * ScaleFactor;
+                height = height * ScaleFactor;
+            }
+
             DrawText(
                 deviceContext,
                 text,
@@ -646,6 +863,11 @@ namespace Kirilium
         /// <returns></returns>
         public static Size MeasureText(string text, Font font)
         {
+            if (ScaleDpi)
+            {
+                font = new Font(font.FontFamily, font.Size * ScaleFactor);
+            }
+
             return TextRenderer.MeasureText(text, font);
         }
 

@@ -11,7 +11,7 @@ namespace Kirilium
     {
         // 非公開フィールド
         private readonly static float ScaleFactor = GetPPI() / 96.0f;           // 描画スケール
-        private readonly static float NormalPenWidth = 1 * ScaleFactor;             // 標準のペンの幅
+        private readonly static float NormalPenWidth = 1 * ScaleFactor;         // 標準のペンの幅
         private readonly static float BoldPenWidth = NormalPenWidth * 2.0f;     // 太いペンの幅
 
         /// <summary>
@@ -797,11 +797,6 @@ namespace Kirilium
             Color backColor,
             TextFormatFlags textFormatFlags)
         {
-            if (ScaleDpi)
-            {
-                font = new Font(font.FontFamily, font.Size * ScaleFactor);
-            }
-
             TextRenderer.DrawText(
                     deviceContext,
                     text,
@@ -863,11 +858,6 @@ namespace Kirilium
         /// <returns></returns>
         public static Size MeasureText(string text, Font font)
         {
-            if (ScaleDpi)
-            {
-                font = new Font(font.FontFamily, font.Size * ScaleFactor);
-            }
-
             return TextRenderer.MeasureText(text, font);
         }
 

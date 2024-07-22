@@ -252,13 +252,23 @@ namespace Kirilium.Controls
         }
 
         /// <summary>
+        /// 選択されたインデックスが変更された場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.SelectedIndexChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
         /// アイテムレンダラで選択されたアイテムのインデックスが変更された場合の処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnItemRendererSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SelectedIndexChanged?.Invoke(sender, e);
+            OnSelectedIndexChanged(sender, e);
         }
 
         /// <summary>

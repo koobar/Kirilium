@@ -159,7 +159,7 @@ namespace Kirilium.Controls
 
                 Renderer.DrawImageUnscaled(
                     deviceContext, 
-                    textRect.Right + PADDING - glyphWidth,
+                    textRect.Right - PADDING - glyphWidth,
                     (textRect.Bottom / 2) - (glyphHeight / 2) - (PADDING / 2),
                     glyphWidth, 
                     glyphHeight, 

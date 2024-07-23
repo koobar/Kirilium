@@ -22,7 +22,10 @@ namespace Kirilium.Controls
         // コンストラクタ
         public KDetailsList()
         {
+            this.Width = 100;
+            this.Height = 100;
             this.Padding = new Padding(0);
+
             this.columnHeaderRenderer = new KDetailsListColumnHeaderRenderer();
             this.columnHeaderRenderer.Dock = DockStyle.Top;
             this.columnHeaderRenderer.Height = 25;

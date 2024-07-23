@@ -23,6 +23,9 @@ namespace Kirilium.Controls
         // コンストラクタ
         public KProgressBar()
         {
+            this.Width = 100;
+            this.Height = 25;
+
             this.maximumValue = 100;
             this.minimumValue = 0;
             this.value = 0;

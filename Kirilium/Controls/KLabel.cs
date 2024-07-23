@@ -10,6 +10,13 @@ namespace Kirilium.Controls
         // 非公開フィールド
         private KLabelTextLayout textLayout;
 
+        // コンストラクタ
+        public KLabel() : base()
+        {
+            this.Width = 100;
+            this.Height = 25;
+        }
+
         #region プロパティ
 
         /// <summary>

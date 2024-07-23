@@ -11,6 +11,13 @@ namespace Kirilium.Controls
         // 非公開フィールド
         private CheckState checkState;
 
+        // コンストラクタ
+        public KCheckBox() : base()
+        {
+            this.Width = 100;
+            this.Height = 25;
+        }
+
         #region イベント
 
         /// <summary>

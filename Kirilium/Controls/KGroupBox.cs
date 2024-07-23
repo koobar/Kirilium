@@ -7,6 +7,13 @@ namespace Kirilium.Controls
     [SupportedOSPlatform("windows")]
     public class KGroupBox : KControl
     {
+        // コンストラクタ
+        public KGroupBox() : base()
+        {
+            this.Width = 100;
+            this.Height = 100;
+        }
+
         /// <summary>
         /// 描画処理
         /// </summary>

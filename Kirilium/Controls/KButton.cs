@@ -1,5 +1,4 @@
 ﻿using Kirilium.Themes;
-using System;
 using System.Drawing;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
@@ -11,6 +10,13 @@ namespace Kirilium.Controls
     {
         // 非公開フィールド
         private Image image;
+
+        // コンストラクタ
+        public KButton() : base()
+        {
+            this.Width = 75;
+            this.Height = 25;
+        }
 
         #region プロパティ
 

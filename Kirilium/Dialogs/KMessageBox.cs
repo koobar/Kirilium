@@ -104,6 +104,8 @@ namespace Kirilium.Dialogs
             var btn = new KButton();
             btn.Text = TranslateButtonText(text);
             btn.Parent = buttonParent;
+            btn.Width = 75;
+            btn.Height = 25;
             btn.Click += delegate
             {
                 window.DialogResult = dialogResult;

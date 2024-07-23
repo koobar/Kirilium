@@ -180,7 +180,6 @@ namespace SampleApplication
             khScrollBar1.Name = "khScrollBar1";
             khScrollBar1.Size = new System.Drawing.Size(181, 15);
             khScrollBar1.TabIndex = 6;
-            khScrollBar1.ThumbSize = 45;
             khScrollBar1.Top = 295;
             khScrollBar1.Value = 0;
             khScrollBar1.Width = 181;
@@ -198,7 +197,6 @@ namespace SampleApplication
             kvScrollBar1.Name = "kvScrollBar1";
             kvScrollBar1.Size = new System.Drawing.Size(15, 258);
             kvScrollBar1.TabIndex = 7;
-            kvScrollBar1.ThumbSize = 45;
             kvScrollBar1.Top = 52;
             kvScrollBar1.Value = 0;
             kvScrollBar1.Width = 15;

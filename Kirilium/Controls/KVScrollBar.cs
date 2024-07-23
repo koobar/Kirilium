@@ -129,21 +129,6 @@ namespace Kirilium.Controls
             }
         }
 
-        /// <summary>
-        /// つまみのサイズ
-        /// </summary>
-        public int ThumbSize
-        {
-            set
-            {
-                this.slidePanel.ThumbSize = value;
-            }
-            get
-            {
-                return this.slidePanel.ThumbSize;
-            }
-        }
-
         #endregion
 
         /// <summary>

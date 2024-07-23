@@ -19,11 +19,12 @@ namespace Kirilium.Controls.Elements
         private int minimumValue;
         private int value;
         private int thumbSize;
+        private bool isVertical;
 
         // コンストラクタ
         public ScrollBarSlidePanel() : base()
         {
-            this.ThumbSize = 45;
+            //this.ThumbSize = 45;
         }
 
         /// <summary>
@@ -45,7 +46,19 @@ namespace Kirilium.Controls.Elements
         /// <summary>
         /// 垂直方向であるかどうかを示す。
         /// </summary>
-        public bool IsVertical { set; get; }
+        public bool IsVertical
+        {
+            set
+            {
+                this.isVertical = value;
+                UpdateThumb();
+                Invalidate();
+            }
+            get
+            {
+                return this.isVertical;
+            }
+        }
 
         /// <summary>
         /// 最大値
@@ -101,22 +114,6 @@ namespace Kirilium.Controls.Elements
             }
         }
 
-        /// <summary>
-        /// つまみのサイズ
-        /// </summary>
-        public int ThumbSize
-        {
-            set
-            {
-                this.thumbSize = value;
-                Invalidate();
-            }
-            get
-            {
-                return this.thumbSize;
-            }
-        }
-
         #endregion
 
         /// <summary>
@@ -126,19 +123,29 @@ namespace Kirilium.Controls.Elements
         {
             var posRatio = (double)this.Value / this.MaximumValue;
 
+            const int minimumThumbSize = 15;
+            
+
             if (this.IsVertical)
             {
-                var trackAreaSize = this.Height - this.ThumbSize;
+                // つまみのサイズを計算する。
+                int thumbSize = Math.Max(this.Height - Math.Abs(this.MaximumValue - this.MinimumValue), minimumThumbSize);
+
+                var trackAreaSize = this.Height - thumbSize;
                 var pos = (int)(trackAreaSize * posRatio);
 
-                this.thumbRect = new Rectangle(this.DisplayRectangle.Left, pos, Math.Max(this.ClientSize.Width, this.ThumbSize), this.ThumbSize);
+                this.thumbRect = new Rectangle(this.DisplayRectangle.Left, pos, Math.Max(this.ClientSize.Width, thumbSize), thumbSize);
             }
             else
             {
-                var trackAreaSize = this.Width - this.ThumbSize;
+                // つまみのサイズを計算する。
+                int thumbSize = Math.Max(this.Width - Math.Abs(this.MaximumValue - this.MinimumValue), minimumThumbSize);
+
+                // トラックの領域のサイズと位置を計算する。
+                var trackAreaSize = this.Width - thumbSize;
                 var pos = (int)(trackAreaSize * posRatio);
 
-                this.thumbRect = new Rectangle(this.DisplayRectangle.Left + pos, this.DisplayRectangle.Top, this.ThumbSize, Math.Max(this.Height, this.ThumbSize));
+                this.thumbRect = new Rectangle(this.DisplayRectangle.Left + pos, this.DisplayRectangle.Top, thumbSize, Math.Max(this.Height, thumbSize));
             }
         }
 

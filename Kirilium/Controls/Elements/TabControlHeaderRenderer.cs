@@ -179,19 +179,24 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         private Color GetTabHeaderTextColor(int index)
         {
-            var backColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
+            var color = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
+
+            if (!this.Enabled)
+            {
+                color = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextDisabled);
+            }
 
             if (this.tabHeaders[index].IsHot)
             {
-                backColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextHighlight);
+                color = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextHighlight);
             }
 
             if (this.tabHeaders[index].IsSelected)
             {
-                backColor = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextHighlight);
+                color = ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextHighlight);
             }
 
-            return backColor;
+            return color;
         }
 
         #region マウス系処理のオーバーライド

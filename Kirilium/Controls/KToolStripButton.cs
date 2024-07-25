@@ -160,7 +160,7 @@ namespace Kirilium.Controls
                         0,
                         e.ClipRectangle.Width - (e.ClipRectangle.Left + this.Height),
                         e.ClipRectangle.Height),
-                    ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                    KControl.GetTextColor(this.Enabled),
                     backColor,
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             }
@@ -172,7 +172,7 @@ namespace Kirilium.Controls
                     this.Text,
                     this.Font,
                     e.ClipRectangle,
-                    ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                    KControl.GetTextColor(this.Enabled),
                     backColor,
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             }

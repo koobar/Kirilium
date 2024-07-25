@@ -142,7 +142,7 @@ namespace Kirilium.Controls
                 rect.Top + COMBOBOX_TEXT_PADDING,
                 rect.Width - (COMBOBOX_TEXT_PADDING * 2) - iconWidth,
                 rect.Height - (COMBOBOX_TEXT_PADDING * 2),
-                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                KControl.GetTextColor(this.Enabled),
                 backColor,
                 TextFormatFlags.Default | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
 
@@ -187,7 +187,7 @@ namespace Kirilium.Controls
                     e.Bounds.Top + COMBOBOX_TEXT_PADDING,
                     e.Bounds.Width - (COMBOBOX_TEXT_PADDING * 2),
                     e.Bounds.Height - (COMBOBOX_TEXT_PADDING * 2),
-                    ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                    KControl.GetTextColor(this.Enabled),
                     itemBackColor,
                     TextFormatFlags.Default | TextFormatFlags.EndEllipsis);
             }

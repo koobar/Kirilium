@@ -8,7 +8,7 @@ namespace Kirilium
         {
             get
             {
-                return new Version(0, 0, 2, 0);
+                return new Version(0, 0, 3, 0);
             }
         }
     }

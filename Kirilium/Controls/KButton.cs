@@ -89,7 +89,7 @@ namespace Kirilium.Controls
                     this.DisplayRectangle.Y,
                     this.DisplayRectangle.Width,
                     this.DisplayRectangle.Height,
-                    ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                    GetTextColor(),
                     GetBackColor(),
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }

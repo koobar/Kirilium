@@ -176,30 +176,9 @@ namespace Kirilium.Controls
 
         #region 文字色の取得を実装したメソッド
 
-        /// <summary>
-        /// 文字色を取得する。
-        /// </summary>
-        /// <returns></returns>
-        public Color GetTextColor()
+        public static Color GetTextColor(bool enabled, bool highlight)
         {
-            if (this.Enabled)
-            {
-                return ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
-            }
-            else
-            {
-                return ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextDisabled);
-            }
-        }
-
-        /// <summary>
-        /// ハイライトの状態を指定して文字色を取得する。
-        /// </summary>
-        /// <param name="highlight"></param>
-        /// <returns></returns>
-        public Color GetTextColor(bool highlight)
-        {
-            if (this.Enabled)
+            if (enabled)
             {
                 if (highlight)
                 {
@@ -212,6 +191,27 @@ namespace Kirilium.Controls
             {
                 return ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextDisabled);
             }
+        }
+
+        public static Color GetTextColor(bool enabled)
+        {
+            if (enabled)
+            {
+                return ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal);
+            }
+            else
+            {
+                return ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextDisabled);
+            }
+        }
+
+        /// <summary>
+        /// 文字色を取得する。
+        /// </summary>
+        /// <returns></returns>
+        public Color GetTextColor()
+        {
+            return KControl.GetTextColor(this.Enabled);
         }
 
         #endregion

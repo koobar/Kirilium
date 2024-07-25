@@ -178,7 +178,7 @@ namespace Kirilium.Controls
                        $"{this.Percent}%",
                        this.Font,
                        this.DisplayRectangle,
-                       ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                       GetTextColor(),
                        Color.Transparent,
                        TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }

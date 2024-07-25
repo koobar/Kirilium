@@ -32,7 +32,7 @@ namespace Kirilium.Controls
                 textY,
                 textSize.Width,
                 textSize.Height,
-                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                GetTextColor(),
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.GroupBoxBackColorNormal),
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
 

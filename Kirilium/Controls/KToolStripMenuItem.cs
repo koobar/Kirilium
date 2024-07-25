@@ -107,7 +107,7 @@ namespace Kirilium.Controls
                 this.Text,
                 this.Font,
                 clipRectangle,
-                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                KControl.GetTextColor(this.Enabled),
                 backColor,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
@@ -172,7 +172,7 @@ namespace Kirilium.Controls
                 this.Text,
                 this.Font,
                 textRect,
-                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                KControl.GetTextColor(this.Enabled),
                 backColor,
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
 

@@ -30,7 +30,7 @@ namespace Kirilium.Themes
             // コントロールのテキストの配色
             SetColor(ColorKeys.ApplicationTextNormal, normalWhite);
             SetColor(ColorKeys.ApplicationTextHighlight, normalWhite);
-            SetColor(ColorKeys.ApplicationTextDisabled, normalWhite);
+            SetColor(ColorKeys.ApplicationTextDisabled, Color.FromArgb(92, 92, 92));
 
             // ウィンドウの配色
             SetColor(ColorKeys.WindowBackColor, windowBackColor);

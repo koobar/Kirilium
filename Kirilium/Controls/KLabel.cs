@@ -81,7 +81,7 @@ namespace Kirilium.Controls
                 this.Text,
                 this.Font,
                 e.ClipRectangle,
-                ThemeManager.CurrentTheme.GetColor(ColorKeys.ApplicationTextNormal),
+                GetTextColor(),
                 ThemeManager.CurrentTheme.GetColor(ColorKeys.LabelBackColor),
                 GetTextFormatFlags());
         }

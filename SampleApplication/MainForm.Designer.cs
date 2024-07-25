@@ -53,6 +53,7 @@ namespace SampleApplication
             kCheckBox1 = new Kirilium.Controls.KCheckBox();
             kCheckBox2 = new Kirilium.Controls.KCheckBox();
             kTabControl1 = new Kirilium.Controls.KTabControl();
+            disabledMenuToolStripMenuItem = new Kirilium.Controls.KToolStripMenuItem();
             kMenuStrip1.SuspendLayout();
             kToolStrip1.SuspendLayout();
             SuspendLayout();
@@ -69,7 +70,7 @@ namespace SampleApplication
             // 
             // fileFToolStripMenuItem
             // 
-            fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { kToolStripMenuItem1 });
+            fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { kToolStripMenuItem1, disabledMenuToolStripMenuItem });
             fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             fileFToolStripMenuItem.Size = new System.Drawing.Size(51, 18);
             fileFToolStripMenuItem.Text = "File(&F)";
@@ -339,6 +340,13 @@ namespace SampleApplication
             kTabControl1.Top = 78;
             kTabControl1.Width = 431;
             // 
+            // disabledMenuToolStripMenuItem
+            // 
+            disabledMenuToolStripMenuItem.Enabled = false;
+            disabledMenuToolStripMenuItem.Name = "disabledMenuToolStripMenuItem";
+            disabledMenuToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            disabledMenuToolStripMenuItem.Text = "Disabled Menu";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -398,5 +406,6 @@ namespace SampleApplication
         private Kirilium.Controls.KCheckBox kCheckBox2;
         private Kirilium.Controls.KTabControl kTabControl1;
         private Kirilium.Controls.KToolStripMenuItem kToolStripMenuItem1;
+        private Kirilium.Controls.KToolStripMenuItem disabledMenuToolStripMenuItem;
     }
 }

@@ -262,7 +262,6 @@ namespace Kirilium.Controls.Elements
 
                 // 後始末
                 x += columnHeader.ActualWidth;
-                x += KDetailsList.ELEMENTS_MARGIN;
             }
 
             // 水平方向のグリッド線の描画が有効なら描画する。
@@ -418,11 +417,11 @@ namespace Kirilium.Controls.Elements
 
             if (e.Delta > 0)
             {
-                index = this.visibleFirstItemIndex - this.ScrollSpeed;
+                index = this.visibleFirstItemIndex - this.scrollSpeed;
             }
             else
             {
-                index = this.visibleFirstItemIndex + this.ScrollSpeed;
+                index = this.visibleFirstItemIndex + this.scrollSpeed;
             }
 
             if (index >= this.Items.Count - n)

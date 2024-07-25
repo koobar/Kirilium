@@ -21,12 +21,6 @@ namespace Kirilium.Controls.Elements
         private int thumbSize;
         private bool isVertical;
 
-        // コンストラクタ
-        public ScrollBarSlidePanel() : base()
-        {
-            //this.ThumbSize = 45;
-        }
-
         /// <summary>
         /// コントロールのハンドルが生成された場合の処理
         /// </summary>
@@ -124,7 +118,6 @@ namespace Kirilium.Controls.Elements
             var posRatio = (double)this.Value / this.MaximumValue;
 
             const int minimumThumbSize = 15;
-            
 
             if (this.IsVertical)
             {

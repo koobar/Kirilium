@@ -38,7 +38,7 @@ namespace Kirilium.Controls.Elements
         /// <returns></returns>
         protected virtual Rectangle GetColumnBounds(int index)
         {
-            int x = 1;
+            int x = 0;
             for (int i = 0; i < this.columnHeaders.Count; ++i)
             {
                 // 列ヘッダの幅を取得
@@ -65,7 +65,6 @@ namespace Kirilium.Controls.Elements
 
                 // 後始末
                 x += bounds.Width;
-                x += KDetailsList.ELEMENTS_MARGIN;
             }
 
             return Rectangle.Empty;

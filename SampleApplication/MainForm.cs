@@ -59,7 +59,7 @@ namespace SampleApplication
         {
             var result = new KDetailsList();
             result.Dock = DockStyle.Fill;
-            result.Columns.Add(new KColumnHeader(result));
+            result.Columns.Add(new KColumnHeader(result) { HeaderTextFormatFlags = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter });
             result.Columns.Add(new KColumnHeader(result));
             result.Columns[0].Text = "Column 1";
             result.Columns[1].Text = "Column 2";
